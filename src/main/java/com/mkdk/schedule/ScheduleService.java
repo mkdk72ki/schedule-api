@@ -20,18 +20,27 @@ public class ScheduleService {
     return getSchedule;
   }
 
+  public Schedule findById(int scheduleId) {
+    return scheduleMapper.findById(scheduleId)
+        .orElseThrow(() -> new ScheduleNotFoundException("schedule not found"));
+  }
+
   public Schedule createSchedule(Integer userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     Schedule schedule = new Schedule(null, userId, groupId, title, scheduleDate, startTime, endTime, comment);
     scheduleMapper.create(schedule);
     return schedule;
   }
 
-  public void updateSchedule(int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
-    Schedule schedule = new Schedule(null, null, groupId, title, scheduleDate, startTime, endTime, comment);
-    scheduleMapper.update(schedule);
+  public void updateSchedule(Integer scheduleId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+    Schedule schedule = scheduleMapper.findById(scheduleId)
+        .orElseThrow(() -> new ScheduleNotFoundException("schedule not found"));
+    schedule.update(title, scheduleDate, startTime, endTime, comment);
+    this.scheduleMapper.update(schedule);
   }
 
   public void deleteSchedule(Integer scheduleId) {
+    scheduleMapper.findById(scheduleId)
+            .orElseThrow(()->new ScheduleNotFoundException("schedule not found"));
     scheduleMapper.delete(scheduleId);
   }
 
