@@ -44,7 +44,7 @@ public class ScheduleController {
   }
 
   @PatchMapping("/schedule/{scheduleId}")
-  public ResponseEntity<MessageResponse> updateSchedule(@RequestBody ScheduleUpdateForm updateForm) {
+  public ResponseEntity<MessageResponse> updateSchedule(@PathVariable int scheduleId,@RequestBody ScheduleUpdateForm updateForm) {
     scheduleService.updateSchedule(updateForm.getGroupId(), updateForm.getTitle(), updateForm.getScheduleDate(), updateForm.getStartTime(), updateForm.getEndTime(), updateForm.getComment());
     MessageResponse body = new MessageResponse("編集しました");
     return ResponseEntity.ok().body(body);
