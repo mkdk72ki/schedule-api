@@ -5,9 +5,9 @@ import java.time.LocalTime;
 
 public class Schedule {
 
-  private int scheduleId;
+  private final Integer scheduleId;
 
-  private int userId;
+  private final Integer userId;
 
   private int groupId;
 
@@ -32,20 +32,12 @@ public class Schedule {
     this.comment = comment;
   }
 
-  public int getScheduleId() {
+  public Integer getScheduleId() {
     return scheduleId;
   }
 
-  public void setScheduleId(int scheduleId) {
-    this.scheduleId = scheduleId;
-  }
-
-  public int getUserId() {
+  public Integer getUserId() {
     return userId;
-  }
-
-  public void setUserId(int userId) {
-    this.userId = userId;
   }
 
   public int getGroupId() {

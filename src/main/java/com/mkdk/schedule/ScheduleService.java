@@ -20,7 +20,7 @@ public class ScheduleService {
     return getSchedule;
   }
 
-  public Schedule createSchedule(int userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+  public Schedule createSchedule(Integer userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     Schedule schedule = new Schedule(null, userId, groupId, title, scheduleDate, startTime, endTime, comment);
     scheduleMapper.create(schedule);
     return schedule;
@@ -31,7 +31,7 @@ public class ScheduleService {
     scheduleMapper.update(schedule);
   }
 
-  public void deleteSchedule(int scheduleId) {
+  public void deleteSchedule(Integer scheduleId) {
     scheduleMapper.delete(scheduleId);
   }
 

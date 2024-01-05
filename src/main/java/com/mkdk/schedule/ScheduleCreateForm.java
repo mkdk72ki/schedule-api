@@ -1,23 +1,37 @@
 package com.mkdk.schedule;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ScheduleCreateForm {
 
+  @NotNull
   private int userId;
 
+  @NotNull(message = "選択してください")
   private int groupId;
 
+  @NotBlank(message = "入力してください")
+  @Length(max = 20, message = "20字以内で入力してください")
   private String title;
 
-
+  @NotNull(message = "入力してください")
+  @DateTimeFormat(pattern = "yyyy-mm-dd")
   private LocalDate scheduleDate;
 
+  @DateTimeFormat(pattern = "HH:mm")
   private LocalTime startTime;
 
+  @DateTimeFormat(pattern = "HH:mm")
   private LocalTime endTime;
 
+  @Max(value = 100, message = "100字以内で入力してください")
   private String comment;
 
   public ScheduleCreateForm(int userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
