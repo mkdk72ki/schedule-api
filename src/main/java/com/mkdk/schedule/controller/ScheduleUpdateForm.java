@@ -1,13 +1,9 @@
-package com.mkdk.schedule;
+package com.mkdk.schedule.controller;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Schedule {
-
-  private int scheduleId;
-
-  private int userId;
+public class ScheduleUpdateForm {
 
   private int groupId;
 
@@ -21,23 +17,13 @@ public class Schedule {
 
   private String comment;
 
-  public Schedule(Integer scheduleId, Integer userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
-    this.scheduleId = scheduleId;
-    this.userId = userId;
+  public ScheduleUpdateForm(int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     this.groupId = groupId;
     this.title = title;
     this.scheduleDate = scheduleDate;
     this.startTime = startTime;
     this.endTime = endTime;
     this.comment = comment;
-  }
-
-  public int getScheduleId() {
-    return scheduleId;
-  }
-
-  public int getUserId() {
-    return userId;
   }
 
   public int getGroupId() {
@@ -62,14 +48,6 @@ public class Schedule {
 
   public String getComment() {
     return comment;
-  }
-
-  public void setScheduleId(int scheduleId) {
-    this.scheduleId = scheduleId;
-  }
-
-  public void setUserId(int userId) {
-    this.userId = userId;
   }
 
   public void setGroupId(int groupId) {

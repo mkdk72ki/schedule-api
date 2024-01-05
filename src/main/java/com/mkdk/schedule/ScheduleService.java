@@ -27,4 +27,9 @@ public class ScheduleService {
     return  schedule;
   }
 
+  public void updateSchedule(int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+    Schedule schedule = new Schedule(null, null, groupId,title,scheduleDate,startTime,endTime,comment);
+    scheduleMapper.update(schedule);
+  }
+
 }
