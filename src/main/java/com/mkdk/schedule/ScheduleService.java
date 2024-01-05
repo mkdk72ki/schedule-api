@@ -1,0 +1,30 @@
+package com.mkdk.schedule;
+
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Objects;
+
+@Service
+public class ScheduleService {
+  private final ScheduleMapper scheduleMapper;
+
+  public ScheduleService(ScheduleMapper scheduleMapper) {
+    this.scheduleMapper = scheduleMapper;
+  }
+
+  public List<Schedule> findSchedule() {
+    List<Schedule> getSchedule;
+      getSchedule = scheduleMapper.findAll();
+    return getSchedule;
+  }
+
+  public Schedule createSchedule(int userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+    Schedule schedule = new Schedule(null, userId, groupId, title, scheduleDate, startTime, endTime, comment);
+    scheduleMapper.create(schedule);
+    return  schedule;
+  }
+
+}
