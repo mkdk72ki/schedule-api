@@ -32,4 +32,8 @@ public class ScheduleService {
     scheduleMapper.update(schedule);
   }
 
+  public void deleteSchedule(int scheduleId){
+    scheduleMapper.delete(scheduleId);
+  }
+
 }

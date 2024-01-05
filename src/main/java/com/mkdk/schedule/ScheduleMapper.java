@@ -1,5 +1,6 @@
 package com.mkdk.schedule;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -19,5 +20,8 @@ public interface ScheduleMapper {
 
   @Update("UPDATE schedule SET group_id = #{group_id}, title = #{title}, schedule_date = #{schedule_date}, start_time = #{start_time}, end_time = #{end_time}, comment = #{comment}")
   void update(Schedule schedule);
+
+  @Delete("DELETE FROM schedule WHERE schedule_id = #{schedule_id}")
+  void delete(int id);
 
 }
