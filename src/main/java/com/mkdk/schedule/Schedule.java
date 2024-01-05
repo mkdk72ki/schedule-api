@@ -87,4 +87,29 @@ public class Schedule {
   public void setComment(String comment) {
     this.comment = comment;
   }
+
+  public void update(String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+
+    if (title != null) {
+      this.setTitle(title);
+    }
+
+    if (scheduleDate != null) {
+      this.setScheduleDate(scheduleDate);
+    }
+
+    if (startTime != null) {
+      this.setStartTime(startTime);
+    }
+
+    if (endTime != null) {
+      this.setEndTime(endTime);
+    }
+
+    if (comment != null) {
+      this.setComment(comment);
+    }
+
+  }
+
 }

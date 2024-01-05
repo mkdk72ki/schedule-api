@@ -32,6 +32,13 @@ public class ScheduleController {
     return schedules;
   }
 
+  @GetMapping("/schedule/{scheduleId}")
+  public ResponseEntity<Schedule> findById(@PathVariable int scheduleId){
+    Schedule schedule = scheduleService.findById(scheduleId);
+    return  ResponseEntity.ok().body(schedule);
+  }
+
+
   @PostMapping("/schedule")
   public ResponseEntity<MessageResponse> createSchedule(@RequestBody ScheduleCreateForm createForm, UriComponentsBuilder uriComponentsBuilder) {
     Schedule schedule = scheduleService.createSchedule(createForm.getUserId(), createForm.getGroupId(), createForm.getTitle(), createForm.getScheduleDate(), createForm.getStartTime(), createForm.getEndTime(), createForm.getComment());
@@ -42,7 +49,7 @@ public class ScheduleController {
 
   @PatchMapping("/schedule/{scheduleId}")
   public ResponseEntity<MessageResponse> updateSchedule(@PathVariable int scheduleId, @RequestBody ScheduleUpdateForm updateForm) {
-    scheduleService.updateSchedule(updateForm.getGroupId(), updateForm.getTitle(), updateForm.getScheduleDate(), updateForm.getStartTime(), updateForm.getEndTime(), updateForm.getComment());
+    scheduleService.updateSchedule(scheduleId, updateForm.getTitle(), updateForm.getScheduleDate(), updateForm.getStartTime(), updateForm.getEndTime(), updateForm.getComment());
     MessageResponse body = new MessageResponse("編集しました");
     return ResponseEntity.ok().body(body);
   }
