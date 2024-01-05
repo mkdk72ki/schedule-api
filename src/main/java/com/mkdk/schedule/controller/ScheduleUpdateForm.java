@@ -1,34 +1,35 @@
 package com.mkdk.schedule.controller;
 
+import jakarta.validation.constraints.Max;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class ScheduleUpdateForm {
 
-  private int groupId;
-
+  @Max(value = 20, message = "20字以内で入力してください")
   private String title;
 
-
+  @DateTimeFormat(pattern = "yyyy-mm-dd")
   private LocalDate scheduleDate;
 
+  @DateTimeFormat(pattern = "HH:mm")
   private LocalTime startTime;
 
+  @DateTimeFormat(pattern = "HH:mm")
   private LocalTime endTime;
 
+  @Max(value = 100, message = "100字以内で入力してください")
   private String comment;
 
-  public ScheduleUpdateForm(int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
-    this.groupId = groupId;
+  public ScheduleUpdateForm(String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     this.title = title;
     this.scheduleDate = scheduleDate;
     this.startTime = startTime;
     this.endTime = endTime;
     this.comment = comment;
-  }
-
-  public int getGroupId() {
-    return groupId;
   }
 
   public String getTitle() {
@@ -49,10 +50,6 @@ public class ScheduleUpdateForm {
 
   public String getComment() {
     return comment;
-  }
-
-  public void setGroupId(int groupId) {
-    this.groupId = groupId;
   }
 
   public void setTitle(String title) {
