@@ -11,6 +11,7 @@ public class ScheduleCreateForm {
 
   private String title;
 
+
   private LocalDate scheduleDate;
 
   private LocalTime startTime;

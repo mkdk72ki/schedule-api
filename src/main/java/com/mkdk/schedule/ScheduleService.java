@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ScheduleService {
@@ -17,22 +16,22 @@ public class ScheduleService {
 
   public List<Schedule> findSchedule() {
     List<Schedule> getSchedule;
-      getSchedule = scheduleMapper.findAll();
+    getSchedule = scheduleMapper.findAll();
     return getSchedule;
   }
 
   public Schedule createSchedule(int userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     Schedule schedule = new Schedule(null, userId, groupId, title, scheduleDate, startTime, endTime, comment);
     scheduleMapper.create(schedule);
-    return  schedule;
+    return schedule;
   }
 
   public void updateSchedule(int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
-    Schedule schedule = new Schedule(null, null, groupId,title,scheduleDate,startTime,endTime,comment);
+    Schedule schedule = new Schedule(null, null, groupId, title, scheduleDate, startTime, endTime, comment);
     scheduleMapper.update(schedule);
   }
 
-  public void deleteSchedule(int scheduleId){
+  public void deleteSchedule(int scheduleId) {
     scheduleMapper.delete(scheduleId);
   }
 

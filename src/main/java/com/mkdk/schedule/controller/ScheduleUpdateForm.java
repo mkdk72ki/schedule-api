@@ -9,6 +9,7 @@ public class ScheduleUpdateForm {
 
   private String title;
 
+
   private LocalDate scheduleDate;
 
   private LocalTime startTime;
