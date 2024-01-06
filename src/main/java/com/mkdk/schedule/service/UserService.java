@@ -6,7 +6,6 @@ import com.mkdk.schedule.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -16,32 +15,32 @@ public class UserService {
     this.userMapper = userMapper;
   }
 
-  public List<User> findUsers(){
+  public List<User> findUsers() {
     List<User> getUsers = userMapper.findAll();
     return getUsers;
   }
 
-  public User findById(int userId){
+  public User findById(int userId) {
     return userMapper.findById(userId)
-        .orElseThrow(()->new ResourceNotFoundException("user not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("user not found"));
   }
 
-  public User createUser(String userName, String userPassword){
+  public User createUser(String userName, String userPassword) {
     User user = new User(null, userName, userPassword);
     userMapper.create(user);
     return user;
   }
 
-  public void updateUser(int userId, String userName, String userPassword){
+  public void updateUser(int userId, String userName, String userPassword) {
     User user = userMapper.findById(userId)
-        .orElseThrow(()->new ResourceNotFoundException("user not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("user not found"));
     user.update(userName, userPassword);
     userMapper.update(user);
   }
 
-  public void deleteUser(int userId){
+  public void deleteUser(int userId) {
     userMapper.findById(userId)
-            .orElseThrow(()->new ResourceNotFoundException("user not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("user not found"));
     userMapper.delete(userId);
   }
 
