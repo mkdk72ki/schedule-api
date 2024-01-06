@@ -1,10 +1,12 @@
 package com.mkdk.schedule.controller;
 
+import com.mkdk.schedule.controller.form.GroupOrder;
 import com.mkdk.schedule.controller.form.UserCreateForm;
 import com.mkdk.schedule.controller.form.UserUpdateForm;
 import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -39,14 +41,14 @@ public class UserController {
   }
 
   @PostMapping("/users")
-  public ResponseEntity<MessageResponse> createUser(@RequestBody UserCreateForm form, UriComponentsBuilder uriComponentsBuilder){
+  public ResponseEntity<MessageResponse> createUser(@RequestBody @Validated(GroupOrder.class) UserCreateForm form, UriComponentsBuilder uriComponentsBuilder){
     User user = userService.createUser(form.getUserName(), form.getUserPassword());
     URI uri = uriComponentsBuilder.path("/users/{userId}").buildAndExpand(user.getUserId()).toUri();
     MessageResponse body = new MessageResponse("登録しました");
     return ResponseEntity.created(uri).body(body);
   }
   @PatchMapping("/users/{userId}")
-  public ResponseEntity<MessageResponse> updateUser(@PathVariable int userId, @RequestBody UserUpdateForm form){
+  public ResponseEntity<MessageResponse> updateUser(@PathVariable int userId, @RequestBody @Validated(GroupOrder.class) UserUpdateForm form){
     userService.updateUser(userId, form.getUserName(), form.getUserPassword());
     MessageResponse body = new MessageResponse("編集しました");
     return ResponseEntity.ok().body(body);
