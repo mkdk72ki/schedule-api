@@ -32,6 +32,12 @@ public class UserController {
     return userService.findUsers();
   }
 
+  @GetMapping("/users/{userId}")
+  public ResponseEntity<User> findById(@PathVariable int userId){
+    User user = userService.findById(userId);
+    return ResponseEntity.ok().body(user);
+  }
+
   @PostMapping("/users")
   public ResponseEntity<MessageResponse> createUser(@RequestBody UserCreateForm form, UriComponentsBuilder uriComponentsBuilder){
     User user = userService.createUser(form.getUserName(), form.getUserPassword());

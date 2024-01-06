@@ -6,6 +6,7 @@ import com.mkdk.schedule.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,6 +19,11 @@ public class UserService {
   public List<User> findUsers(){
     List<User> getUsers = userMapper.findAll();
     return getUsers;
+  }
+
+  public User findById(int userId){
+    return userMapper.findById(userId)
+        .orElseThrow(()->new ResourceNotFoundException("user not found"));
   }
 
   public User createUser(String userName, String userPassword){
