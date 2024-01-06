@@ -1,6 +1,6 @@
 package com.mkdk.schedule.controller;
 
-import com.mkdk.schedule.exception.ScheduleNotFoundException;
+import com.mkdk.schedule.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,9 @@ import java.util.Map;
 @ControllerAdvice
 public class ScheduleExceptionHandler {
 
-  @ExceptionHandler(value = ScheduleNotFoundException.class)
+  @ExceptionHandler(value = ResourceNotFoundException.class)
   public ResponseEntity<Map<String, String>> handleNoScheduleFound(
-      ScheduleNotFoundException e, HttpServletRequest request) {
+      ResourceNotFoundException e, HttpServletRequest request) {
     Map<String, String> body = Map.of(
         "timestamp", ZonedDateTime.now().toString(),
         "status", String.valueOf(HttpStatus.NOT_FOUND.value()),
