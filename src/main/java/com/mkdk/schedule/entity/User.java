@@ -2,19 +2,19 @@ package com.mkdk.schedule.entity;
 
 public class User {
 
-  private int userId;
+  private Integer userId;
 
-  private String name;
+  private String userName;
 
-  private String password;
+  private String userPassword;
 
-  public User(int userId, String name, String password) {
+  public User(Integer userId, String userName, String userPassword) {
     this.userId = userId;
-    this.name = name;
-    this.password = password;
+    this.userName = userName;
+    this.userPassword = userPassword;
   }
 
-  public int getUserId() {
+  public Integer getUserId() {
     return userId;
   }
 
@@ -22,19 +22,19 @@ public class User {
     this.userId = userId;
   }
 
-  public String getName() {
-    return name;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
-  public String getPassword() {
-    return password;
+  public String getUserPassword() {
+    return userPassword;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  public void setUserPassword(String userPassword) {
+    this.userPassword = userPassword;
   }
 }

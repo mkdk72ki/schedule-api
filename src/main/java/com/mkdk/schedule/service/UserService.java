@@ -18,4 +18,11 @@ public class UserService {
     List<User> getUsers = userMapper.findAll();
     return getUsers;
   }
+
+  public User createUser(String userName, String userPassword){
+    User user = new User(null, userName, userPassword);
+    userMapper.create(user);
+    return user;
+  }
+
 }
