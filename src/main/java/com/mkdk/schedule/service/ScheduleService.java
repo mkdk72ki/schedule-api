@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ScheduleService {
@@ -17,9 +18,15 @@ public class ScheduleService {
     this.scheduleMapper = scheduleMapper;
   }
 
-  public List<Schedule> findSchedule() {
+  public List<Schedule> findSchedule(Integer groupId, LocalDate scheduleDate) {
     List<Schedule> getSchedule;
-    getSchedule = scheduleMapper.findAll();
+    if (Objects.isNull(groupId) && Objects.isNull(scheduleDate)) {
+      getSchedule = scheduleMapper.findAll();
+    } else if (Objects.nonNull(groupId) && Objects.isNull(scheduleDate)) {
+      getSchedule = scheduleMapper.findByGroup(groupId);
+    } else {
+      getSchedule = scheduleMapper.findByDate(scheduleDate);
+    }
     return getSchedule;
   }
 
