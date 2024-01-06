@@ -5,6 +5,7 @@ import com.mkdk.schedule.controller.form.ScheduleUpdateForm;
 import com.mkdk.schedule.entity.Schedule;
 import com.mkdk.schedule.service.ScheduleService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -28,8 +29,7 @@ public class ScheduleController {
 
   @GetMapping("/schedule")
   public List<Schedule> findSchedule() {
-    List<Schedule> schedules = scheduleService.findSchedule();
-    return schedules;
+    return scheduleService.findSchedule();
   }
 
   @GetMapping("/schedule/{scheduleId}")
@@ -40,7 +40,7 @@ public class ScheduleController {
 
 
   @PostMapping("/schedule")
-  public ResponseEntity<MessageResponse> createSchedule(@RequestBody ScheduleCreateForm createForm, UriComponentsBuilder uriComponentsBuilder) {
+  public ResponseEntity<MessageResponse> createSchedule(@RequestBody @Validated ScheduleCreateForm createForm, UriComponentsBuilder uriComponentsBuilder) {
     Schedule schedule = scheduleService.createSchedule(createForm.getUserId(), createForm.getGroupId(), createForm.getTitle(), createForm.getScheduleDate(), createForm.getStartTime(), createForm.getEndTime(), createForm.getComment());
     URI uri = uriComponentsBuilder.path("/schedule/{scheduleId}").buildAndExpand(schedule.getScheduleId()).toUri();
     MessageResponse body = new MessageResponse("登録しました");
@@ -48,7 +48,7 @@ public class ScheduleController {
   }
 
   @PatchMapping("/schedule/{scheduleId}")
-  public ResponseEntity<MessageResponse> updateSchedule(@PathVariable int scheduleId, @RequestBody ScheduleUpdateForm updateForm) {
+  public ResponseEntity<MessageResponse> updateSchedule(@PathVariable int scheduleId, @RequestBody @Validated ScheduleUpdateForm updateForm) {
     scheduleService.updateSchedule(scheduleId, updateForm.getTitle(), updateForm.getScheduleDate(), updateForm.getStartTime(), updateForm.getEndTime(), updateForm.getComment());
     MessageResponse body = new MessageResponse("編集しました");
     return ResponseEntity.ok().body(body);
