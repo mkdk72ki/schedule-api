@@ -1,7 +1,7 @@
 package com.mkdk.schedule.service;
 
 import com.mkdk.schedule.entity.Schedule;
-import com.mkdk.schedule.exception.ScheduleNotFoundException;
+import com.mkdk.schedule.exception.ResourceNotFoundException;
 import com.mkdk.schedule.mapper.ScheduleMapper;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +32,7 @@ public class ScheduleService {
 
   public Schedule findById(int scheduleId) {
     return scheduleMapper.findById(scheduleId)
-        .orElseThrow(() -> new ScheduleNotFoundException("schedule not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("schedule not found"));
   }
 
   public Schedule createSchedule(Integer userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
@@ -43,14 +43,14 @@ public class ScheduleService {
 
   public void updateSchedule(Integer scheduleId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     Schedule schedule = scheduleMapper.findById(scheduleId)
-        .orElseThrow(() -> new ScheduleNotFoundException("schedule not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("schedule not found"));
     schedule.update(title, scheduleDate, startTime, endTime, comment);
     this.scheduleMapper.update(schedule);
   }
 
   public void deleteSchedule(Integer scheduleId) {
     scheduleMapper.findById(scheduleId)
-        .orElseThrow(() -> new ScheduleNotFoundException("schedule not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("schedule not found"));
     scheduleMapper.delete(scheduleId);
   }
 
