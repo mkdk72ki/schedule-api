@@ -1,5 +1,6 @@
-package com.mkdk.schedule;
+package com.mkdk.schedule.mapper;
 
+import com.mkdk.schedule.entity.Schedule;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

@@ -1,5 +1,8 @@
-package com.mkdk.schedule;
+package com.mkdk.schedule.service;
 
+import com.mkdk.schedule.entity.Schedule;
+import com.mkdk.schedule.exception.ScheduleNotFoundException;
+import com.mkdk.schedule.mapper.ScheduleMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -40,7 +43,7 @@ public class ScheduleService {
 
   public void deleteSchedule(Integer scheduleId) {
     scheduleMapper.findById(scheduleId)
-            .orElseThrow(()->new ScheduleNotFoundException("schedule not found"));
+        .orElseThrow(() -> new ScheduleNotFoundException("schedule not found"));
     scheduleMapper.delete(scheduleId);
   }
 

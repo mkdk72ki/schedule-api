@@ -1,5 +1,6 @@
-package com.mkdk.schedule;
+package com.mkdk.schedule.controller;
 
+import com.mkdk.schedule.exception.ScheduleNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

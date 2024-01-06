@@ -1,4 +1,4 @@
-package com.mkdk.schedule;
+package com.mkdk.schedule.controller;
 
 public class MessageResponse {
   public String message;

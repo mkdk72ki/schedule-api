@@ -1,4 +1,4 @@
-package com.mkdk.schedule.controller;
+package com.mkdk.schedule.controller.form;
 
 import jakarta.validation.constraints.Max;
 import org.hibernate.validator.constraints.Length;

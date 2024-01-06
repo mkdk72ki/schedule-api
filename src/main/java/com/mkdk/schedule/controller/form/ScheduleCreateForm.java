@@ -1,4 +1,4 @@
-package com.mkdk.schedule;
+package com.mkdk.schedule.controller.form;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;

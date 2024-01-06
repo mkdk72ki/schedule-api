@@ -1,9 +1,9 @@
 package com.mkdk.schedule.controller;
 
-import com.mkdk.schedule.MessageResponse;
-import com.mkdk.schedule.Schedule;
-import com.mkdk.schedule.ScheduleCreateForm;
-import com.mkdk.schedule.ScheduleService;
+import com.mkdk.schedule.controller.form.ScheduleCreateForm;
+import com.mkdk.schedule.controller.form.ScheduleUpdateForm;
+import com.mkdk.schedule.entity.Schedule;
+import com.mkdk.schedule.service.ScheduleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +33,9 @@ public class ScheduleController {
   }
 
   @GetMapping("/schedule/{scheduleId}")
-  public ResponseEntity<Schedule> findById(@PathVariable int scheduleId){
+  public ResponseEntity<Schedule> findById(@PathVariable int scheduleId) {
     Schedule schedule = scheduleService.findById(scheduleId);
-    return  ResponseEntity.ok().body(schedule);
+    return ResponseEntity.ok().body(schedule);
   }
 
 

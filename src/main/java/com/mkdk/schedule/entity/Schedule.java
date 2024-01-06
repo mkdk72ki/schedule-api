@@ -1,4 +1,4 @@
-package com.mkdk.schedule;
+package com.mkdk.schedule.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

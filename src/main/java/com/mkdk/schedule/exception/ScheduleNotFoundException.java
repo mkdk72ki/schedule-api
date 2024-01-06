@@ -1,4 +1,4 @@
-package com.mkdk.schedule;
+package com.mkdk.schedule.exception;
 
 public class ScheduleNotFoundException extends RuntimeException {
   public ScheduleNotFoundException(String message) {
