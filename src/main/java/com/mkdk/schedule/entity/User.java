@@ -37,4 +37,14 @@ public class User {
   public void setUserPassword(String userPassword) {
     this.userPassword = userPassword;
   }
+
+  public void update(String userName, String userPassword){
+    if (userName != null){
+      this.setUserName(userName);
+    }
+    if (userPassword != null){
+      this.setUserPassword(userPassword);
+    }
+  }
+
 }

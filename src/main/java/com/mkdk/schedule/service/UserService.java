@@ -1,6 +1,7 @@
 package com.mkdk.schedule.service;
 
 import com.mkdk.schedule.entity.User;
+import com.mkdk.schedule.exception.ResourceNotFoundException;
 import com.mkdk.schedule.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,19 @@ public class UserService {
     User user = new User(null, userName, userPassword);
     userMapper.create(user);
     return user;
+  }
+
+  public void updateUser(int userId, String userName, String userPassword){
+    User user = userMapper.findById(userId)
+        .orElseThrow(()->new ResourceNotFoundException("user not found"));
+    user.update(userName, userPassword);
+    userMapper.update(user);
+  }
+
+  public void deleteUser(int userId){
+    userMapper.findById(userId)
+            .orElseThrow(()->new ResourceNotFoundException("user not found"));
+    userMapper.delete(userId);
   }
 
 }
