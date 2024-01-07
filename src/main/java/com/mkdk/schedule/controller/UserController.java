@@ -41,7 +41,7 @@ public class UserController {
   }
 
   @PostMapping("/users")
-  public ResponseEntity<MessageResponse> createUser(@RequestBody @Validated(GroupOrder.class) UserCreateForm form, UriComponentsBuilder uriComponentsBuilder) {
+  public ResponseEntity<MessageResponse> createUser(@RequestBody @Validated UserCreateForm form, UriComponentsBuilder uriComponentsBuilder) {
     User user = userService.createUser(form.getUserName(), form.getUserPassword());
     URI uri = uriComponentsBuilder.path("/users/{userId}").buildAndExpand(user.getUserId()).toUri();
     MessageResponse body = new MessageResponse("登録しました");
@@ -49,7 +49,7 @@ public class UserController {
   }
 
   @PatchMapping("/users/{userId}")
-  public ResponseEntity<MessageResponse> updateUser(@PathVariable int userId, @RequestBody @Validated(GroupOrder.class) UserUpdateForm form) {
+  public ResponseEntity<MessageResponse> updateUser(@PathVariable int userId, @RequestBody @Validated UserUpdateForm form) {
     userService.updateUser(userId, form.getUserName(), form.getUserPassword());
     MessageResponse body = new MessageResponse("編集しました");
     return ResponseEntity.ok().body(body);
