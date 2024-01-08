@@ -6,20 +6,19 @@ public class Group {
 
   private String groupName;
 
+  private String groupCode;
+
   private String groupPassword;
 
-  public Group(Integer groupId, String groupName, String groupPassword) {
+  public Group(Integer groupId, String groupName, String groupCode, String groupPassword) {
     this.groupId = groupId;
     this.groupName = groupName;
+    this.groupCode = groupCode;
     this.groupPassword = groupPassword;
   }
 
   public Integer getGroupId() {
     return groupId;
-  }
-
-  public void setGroupId(Integer groupId) {
-    this.groupId = groupId;
   }
 
   public String getGroupName() {
@@ -30,6 +29,14 @@ public class Group {
     this.groupName = groupName;
   }
 
+  public String getGroupCode() {
+    return groupCode;
+  }
+
+  public void setGroupCode(String groupCode) {
+    this.groupCode = groupCode;
+  }
+
   public String getGroupPassword() {
     return groupPassword;
   }
@@ -38,9 +45,12 @@ public class Group {
     this.groupPassword = groupPassword;
   }
 
-  public void update(String groupName, String groupPassword) {
+  public void update(String groupName, String groupCode, String groupPassword) {
     if (groupName != null) {
       this.setGroupName(groupName);
+    }
+    if (groupCode != null) {
+      this.setGroupCode(groupCode);
     }
     if (groupPassword != null) {
       this.setGroupPassword(groupPassword);

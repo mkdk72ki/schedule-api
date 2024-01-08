@@ -1,6 +1,5 @@
 package com.mkdk.schedule.controller;
 
-import com.mkdk.schedule.controller.form.GroupOrder;
 import com.mkdk.schedule.controller.form.UserCreateForm;
 import com.mkdk.schedule.controller.form.UserUpdateForm;
 import com.mkdk.schedule.entity.User;
@@ -42,7 +41,7 @@ public class UserController {
 
   @PostMapping("/users")
   public ResponseEntity<MessageResponse> createUser(@RequestBody @Validated UserCreateForm form, UriComponentsBuilder uriComponentsBuilder) {
-    User user = userService.createUser(form.getUserName(), form.getUserPassword());
+    User user = userService.createUser(form.getUserName(), form.getUserCode(), form.getUserPassword());
     URI uri = uriComponentsBuilder.path("/users/{userId}").buildAndExpand(user.getUserId()).toUri();
     MessageResponse body = new MessageResponse("登録しました");
     return ResponseEntity.created(uri).body(body);
@@ -50,7 +49,7 @@ public class UserController {
 
   @PatchMapping("/users/{userId}")
   public ResponseEntity<MessageResponse> updateUser(@PathVariable int userId, @RequestBody @Validated UserUpdateForm form) {
-    userService.updateUser(userId, form.getUserName(), form.getUserPassword());
+    userService.updateUser(userId, form.getUserName(), form.getUserCode(), form.getUserPassword());
     MessageResponse body = new MessageResponse("編集しました");
     return ResponseEntity.ok().body(body);
   }

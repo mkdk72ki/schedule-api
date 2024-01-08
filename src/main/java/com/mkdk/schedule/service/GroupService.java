@@ -26,16 +26,16 @@ public class GroupService {
         .orElseThrow(() -> new ResourceNotFoundException("group not found"));
   }
 
-  public Group createGroup(String groupName, String groupPassword) {
-    Group group = new Group(null, groupName, groupPassword);
+  public Group createGroup(String groupName, String groupCode, String groupPassword) {
+    Group group = new Group(null, groupName, groupCode, groupPassword);
     groupMapper.create(group);
     return group;
   }
 
-  public void updateGroup(int groupId, String groupName, String groupPassword) {
+  public void updateGroup(int groupId, String groupName, String groupCode, String groupPassword) {
     Group group = groupMapper.findById(groupId)
         .orElseThrow(() -> new ResourceNotFoundException("group not found"));
-    group.update(groupName, groupPassword);
+    group.update(groupName, groupCode, groupPassword);
     groupMapper.update(group);
   }
 

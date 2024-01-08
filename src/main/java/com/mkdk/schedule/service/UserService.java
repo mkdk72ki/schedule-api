@@ -25,16 +25,16 @@ public class UserService {
         .orElseThrow(() -> new ResourceNotFoundException("user not found"));
   }
 
-  public User createUser(String userName, String userPassword) {
-    User user = new User(null, userName, userPassword);
+  public User createUser(String userName, String userCode, String userPassword) {
+    User user = new User(null, userName, userCode, userPassword);
     userMapper.create(user);
     return user;
   }
 
-  public void updateUser(int userId, String userName, String userPassword) {
+  public void updateUser(int userId, String userName, String userCode, String userPassword) {
     User user = userMapper.findById(userId)
         .orElseThrow(() -> new ResourceNotFoundException("user not found"));
-    user.update(userName, userPassword);
+    user.update(userName, userCode, userPassword);
     userMapper.update(user);
   }
 

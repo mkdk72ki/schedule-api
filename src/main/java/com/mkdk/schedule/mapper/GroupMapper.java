@@ -20,11 +20,11 @@ public interface GroupMapper {
   @Select("SELECT * FROM `groups` WHERE group_id = #{groupId}")
   Optional<Group> findById(int groupId);
 
-  @Insert("INSERT INTO `groups` (group_id, group_name, group_password) VALUES (#{groupId}, #{groupName}, #{groupPassword})")
+  @Insert("INSERT INTO `groups` (group_id, group_name, group_code, group_password) VALUES (#{groupId}, #{groupName}, #{groupCode}, #{groupPassword})")
   @Options(useGeneratedKeys = true, keyProperty = "groupId")
   void create(Group group);
 
-  @Update("UPDATE `groups` SET group_name = #{groupName}, group_password = #{groupPassword} WHERE group_id = #{groupId}")
+  @Update("UPDATE `groups` SET group_name = #{groupName}, group_code = #{groupCode}, group_password = #{groupPassword} WHERE group_id = #{groupId}")
   void update(Group group);
 
   @Delete("DELETE FROM `groups` WHERE group_id = #{groupId}")

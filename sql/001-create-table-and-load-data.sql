@@ -6,14 +6,16 @@ DROP TABLE IF EXISTS schedule;
 CREATE TABLE users (
  user_id INT unsigned AUTO_INCREMENT,
  user_name VARCHAR(20) NOT NULL,
- user_password VARCHAR(20) NOT NULL,
+ user_code VARCHAR(20) NOT NULL UNIQUE,
+ user_password VARCHAR(50) NOT NULL,
  PRIMARY KEY(user_id)
  );
 
 CREATE TABLE groups (
  group_id INT unsigned AUTO_INCREMENT,
  group_name VARCHAR(20) NOT NULL UNIQUE,
- group_password VARCHAR(20) NOT NULL,
+ group_code VARCHAR(20) NOT NULL UNIQUE,
+ group_password VARCHAR(30) NOT NULL,
  PRIMARY KEY(group_id)
  );
 
