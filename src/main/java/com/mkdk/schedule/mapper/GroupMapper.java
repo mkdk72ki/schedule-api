@@ -17,16 +17,17 @@ public interface GroupMapper {
   @Select("SELECT * FROM `groups`")
   List<Group> findAll();
 
-  @Select("SELECT * FROM `groups` WHERE group_id = #{groupId}")
+  @Select("SELECT * FROM `groups` WHERE id = #{groupId}")
   Optional<Group> findById(int groupId);
 
-  @Insert("INSERT INTO `groups` (group_id, group_name, group_code, group_password) VALUES (#{groupId}, #{groupName}, #{groupCode}, #{groupPassword})")
+  @Insert("INSERT INTO `groups` (id, name, code, password) VALUES (#{groupId}, #{groupName}, #{groupCode}, #{groupPassword})")
   @Options(useGeneratedKeys = true, keyProperty = "groupId")
   void create(Group group);
 
-  @Update("UPDATE `groups` SET group_name = #{groupName}, group_code = #{groupCode}, group_password = #{groupPassword} WHERE group_id = #{groupId}")
+  @Update("UPDATE `groups` SET name = #{groupName}, code = #{groupCode}, password = #{groupPassword} WHERE id = #{groupId}")
   void update(Group group);
 
-  @Delete("DELETE FROM `groups` WHERE group_id = #{groupId}")
+  @Delete("DELETE FROM `groups` WHERE id = #{groupId}")
   void delete(int groupId);
+  
 }

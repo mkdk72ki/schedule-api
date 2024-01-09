@@ -17,23 +17,23 @@ public interface ScheduleMapper {
   @Select("SELECT * FROM schedule")
   List<Schedule> findAll();
 
-  @Select("SELECT * FROM schedule WHERE group_id = #{groupId}")
+  @Select("SELECT * FROM schedule WHERE id = #{groupId}")
   List<Schedule> findByGroup(int groupId);
 
-  @Select("SELECT * FROM schedule WHERE schedule_date = #{scheduleDate}")
+  @Select("SELECT * FROM schedule WHERE skd_date = #{scheduleDate}")
   List<Schedule> findByDate(LocalDate scheduleDate);
 
-  @Select("SELECT * FROM schedule WHERE schedule_id = #{scheduleId}")
+  @Select("SELECT * FROM schedule WHERE id = #{scheduleId}")
   Optional<Schedule> findById(int scheduleId);
 
-  @Insert("INSERT INTO schedule (schedule_id, user_id, group_id, title, schedule_date, start_time, end_time, comment) VALUES (#{scheduleId}, #{userId}, #{groupId}, #{title}, #{scheduleDate}, #{startTime}, #{endTime}, #{comment})")
+  @Insert("INSERT INTO schedule (id, user_id, group_id, title, skd_date, s_time, e_time, comment) VALUES (#{scheduleId}, #{userId}, #{groupId}, #{title}, #{scheduleDate}, #{startTime}, #{endTime}, #{comment})")
   @Options(useGeneratedKeys = true, keyProperty = "scheduleId")
   void create(Schedule schedule);
 
-  @Update("UPDATE schedule SET group_id = #{groupId}, title = #{title}, schedule_date = #{scheduleDate}, start_time = #{startTime}, end_time = #{endTime}, comment = #{comment} WHERE schedule_id = #{scheduleId}")
+  @Update("UPDATE schedule SET group_id = #{groupId}, title = #{title}, skd_date = #{scheduleDate}, s_time = #{startTime}, e_time = #{endTime}, comment = #{comment} WHERE id = #{scheduleId}")
   void update(Schedule schedule);
 
-  @Delete("DELETE FROM schedule WHERE schedule_id = #{scheduleId}")
+  @Delete("DELETE FROM schedule WHERE id = #{scheduleId}")
   void delete(Integer scheduleId);
 
 }
