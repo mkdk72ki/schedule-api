@@ -1,6 +1,7 @@
 package com.mkdk.schedule.mapper;
 
 import com.mkdk.schedule.entity.Group;
+import com.mkdk.schedule.entity.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,6 +21,9 @@ public interface GroupMapper {
   @Select("SELECT * FROM `groups` WHERE id = #{groupId}")
   Optional<Group> findById(int groupId);
 
+  @Select("SELECT * FROM `groups` WHERE code = #{groupCode}")
+  Optional<User> findByCode(String groupCode);
+
   @Insert("INSERT INTO `groups` (id, name, code, password) VALUES (#{groupId}, #{groupName}, #{groupCode}, #{groupPassword})")
   @Options(useGeneratedKeys = true, keyProperty = "groupId")
   void create(Group group);
@@ -29,5 +33,5 @@ public interface GroupMapper {
 
   @Delete("DELETE FROM `groups` WHERE id = #{groupId}")
   void delete(int groupId);
-  
+
 }

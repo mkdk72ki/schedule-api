@@ -1,6 +1,7 @@
 package com.mkdk.schedule.service;
 
 import com.mkdk.schedule.entity.Group;
+import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
 import com.mkdk.schedule.mapper.GroupMapper;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,12 @@ public class GroupService {
 
   public Group createGroup(String groupName, String groupCode, String groupPassword) {
     Group group = new Group(null, groupName, groupCode, groupPassword);
-    groupMapper.create(group);
-    return group;
+    if (groupMapper.findByCode(group.getGroupCode()).isPresent()) {
+      throw new ResourceExistsException("code already exists");
+    } else {
+      groupMapper.create(group);
+      return group;
+    }
   }
 
   public void updateGroup(int groupId, String groupName, String groupCode, String groupPassword) {

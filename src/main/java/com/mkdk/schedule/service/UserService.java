@@ -1,6 +1,7 @@
 package com.mkdk.schedule.service;
 
 import com.mkdk.schedule.entity.User;
+import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
 import com.mkdk.schedule.mapper.UserMapper;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,12 @@ public class UserService {
 
   public User createUser(String userName, String userCode, String userPassword) {
     User user = new User(null, userName, userCode, userPassword);
-    userMapper.create(user);
-    return user;
+    if (userMapper.findByCode(user.getUserCode()).isPresent()) {
+      throw new ResourceExistsException("code already exists");
+    } else {
+      userMapper.create(user);
+      return user;
+    }
   }
 
   public void updateUser(int userId, String userName, String userCode, String userPassword) {
