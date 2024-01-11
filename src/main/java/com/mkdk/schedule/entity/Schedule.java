@@ -7,9 +7,9 @@ public class Schedule {
 
   private final Integer scheduleId;
 
-  private final Integer userId;
+  private String userName;
 
-  private int groupId;
+  private String groupName;
 
   private String title;
 
@@ -21,10 +21,10 @@ public class Schedule {
 
   private String comment;
 
-  public Schedule(Integer scheduleId, Integer userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+  public Schedule(Integer scheduleId, String userName, String groupName, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     this.scheduleId = scheduleId;
-    this.userId = userId;
-    this.groupId = groupId;
+    this.userName = userName;
+    this.groupName = groupName;
     this.title = title;
     this.scheduleDate = scheduleDate;
     this.startTime = startTime;
@@ -36,16 +36,20 @@ public class Schedule {
     return scheduleId;
   }
 
-  public Integer getUserId() {
-    return userId;
+  public String getUserName() {
+    return userName;
   }
 
-  public int getGroupId() {
-    return groupId;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
-  public void setGroupId(int groupId) {
-    this.groupId = groupId;
+  public String getGroupName() {
+    return groupName;
+  }
+
+  public void setGroupName(String groupName) {
+    this.groupName = groupName;
   }
 
   public String getTitle() {

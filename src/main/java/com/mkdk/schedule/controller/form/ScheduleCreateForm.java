@@ -12,10 +12,10 @@ import java.time.LocalTime;
 public class ScheduleCreateForm {
 
   @NotNull
-  private int userId;
+  private String userName;
 
   @NotNull(message = "選択してください")
-  private int groupId;
+  private String groupName;
 
   @NotBlank(message = "入力してください")
   @Length(max = 20, message = "20字以内で入力してください")
@@ -31,12 +31,12 @@ public class ScheduleCreateForm {
   @DateTimeFormat(pattern = "HH:mm")
   private LocalTime endTime;
 
-  @Max(value = 100, message = "100字以内で入力してください")
+  @Length(max = 100, message = "100字以内で入力してください")
   private String comment;
 
-  public ScheduleCreateForm(int userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
-    this.userId = userId;
-    this.groupId = groupId;
+  public ScheduleCreateForm(String userName, String groupName, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+    this.userName = userName;
+    this.groupName = groupName;
     this.title = title;
     this.scheduleDate = scheduleDate;
     this.startTime = startTime;
@@ -44,12 +44,12 @@ public class ScheduleCreateForm {
     this.comment = comment;
   }
 
-  public int getUserId() {
-    return userId;
+  public String getUserName() {
+    return userName;
   }
 
-  public int getGroupId() {
-    return groupId;
+  public String getGroupName() {
+    return groupName;
   }
 
   public String getTitle() {
