@@ -6,20 +6,19 @@ public class User {
 
   private String userName;
 
+  private String userCode;
+
   private String userPassword;
 
-  public User(Integer userId, String userName, String userPassword) {
+  public User(Integer userId, String userName, String userCode, String userPassword) {
     this.userId = userId;
     this.userName = userName;
+    this.userCode = userCode;
     this.userPassword = userPassword;
   }
 
   public Integer getUserId() {
     return userId;
-  }
-
-  public void setUserId(int userId) {
-    this.userId = userId;
   }
 
   public String getUserName() {
@@ -30,6 +29,14 @@ public class User {
     this.userName = userName;
   }
 
+  public String getUserCode() {
+    return userCode;
+  }
+
+  public void setUserCode(String userCode) {
+    this.userCode = userCode;
+  }
+
   public String getUserPassword() {
     return userPassword;
   }
@@ -38,9 +45,12 @@ public class User {
     this.userPassword = userPassword;
   }
 
-  public void update(String userName, String userPassword) {
+  public void update(String userName, String userCode, String userPassword) {
     if (userName != null) {
       this.setUserName(userName);
+    }
+    if (userCode != null) {
+      this.setUserCode(userCode);
     }
     if (userPassword != null) {
       this.setUserPassword(userPassword);

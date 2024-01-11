@@ -1,5 +1,6 @@
 package com.mkdk.schedule.controller;
 
+import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class ScheduleExceptionHandler {
 
   @ExceptionHandler(value = ResourceNotFoundException.class)
-  public ResponseEntity<Map<String, String>> handleNoScheduleFound(
+  public ResponseEntity<Map<String, String>> handleNoResourceFound(
       ResourceNotFoundException e, HttpServletRequest request) {
     Map<String, String> body = Map.of(
         "timestamp", ZonedDateTime.now().toString(),
@@ -26,7 +27,18 @@ public class ScheduleExceptionHandler {
         "message", e.getMessage(),
         "path", request.getRequestURI());
     return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+  }
 
+  @ExceptionHandler(value = ResourceExistsException.class)
+  public ResponseEntity<Map<String, String>> handleResourceExists(
+      ResourceExistsException e, HttpServletRequest request) {
+    Map<String, String> body = Map.of(
+        "timestamp", ZonedDateTime.now().toString(),
+        "status", String.valueOf(HttpStatus.CONFLICT.value()),
+        "error", HttpStatus.CONFLICT.getReasonPhrase(),
+        "message", e.getMessage(),
+        "path", request.getRequestURI());
+    return new ResponseEntity<>(body, HttpStatus.CONFLICT);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -43,7 +55,6 @@ public class ScheduleExceptionHandler {
         "message", errors,
         "path", request.getRequestURI());
     return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
-
   }
 
 }

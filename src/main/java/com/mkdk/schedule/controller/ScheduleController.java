@@ -30,8 +30,8 @@ public class ScheduleController {
   }
 
   @GetMapping("/schedule")
-  public List<Schedule> findSchedule(@RequestParam(required = false) Integer groupId, LocalDate scheduleDate) {
-    return scheduleService.findSchedule(groupId, scheduleDate);
+  public List<Schedule> findSchedule(@RequestParam(required = false) String groupName, LocalDate scheduleDate) {
+    return scheduleService.findSchedule(groupName, scheduleDate);
   }
 
   @GetMapping("/schedule/{scheduleId}")
@@ -43,7 +43,7 @@ public class ScheduleController {
 
   @PostMapping("/schedule")
   public ResponseEntity<MessageResponse> createSchedule(@RequestBody @Validated ScheduleCreateForm createForm, UriComponentsBuilder uriComponentsBuilder) {
-    Schedule schedule = scheduleService.createSchedule(createForm.getUserId(), createForm.getGroupId(), createForm.getTitle(), createForm.getScheduleDate(), createForm.getStartTime(), createForm.getEndTime(), createForm.getComment());
+    Schedule schedule = scheduleService.createSchedule(createForm.getUserName(), createForm.getGroupName(), createForm.getTitle(), createForm.getScheduleDate(), createForm.getStartTime(), createForm.getEndTime(), createForm.getComment());
     URI uri = uriComponentsBuilder.path("/schedule/{scheduleId}").buildAndExpand(schedule.getScheduleId()).toUri();
     MessageResponse body = new MessageResponse("登録しました");
     return ResponseEntity.created(uri).body(body);

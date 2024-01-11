@@ -18,12 +18,12 @@ public class ScheduleService {
     this.scheduleMapper = scheduleMapper;
   }
 
-  public List<Schedule> findSchedule(Integer groupId, LocalDate scheduleDate) {
+  public List<Schedule> findSchedule(String groupName, LocalDate scheduleDate) {
     List<Schedule> getSchedule;
-    if (Objects.isNull(groupId) && Objects.isNull(scheduleDate)) {
+    if (Objects.isNull(groupName) && Objects.isNull(scheduleDate)) {
       getSchedule = scheduleMapper.findAll();
-    } else if (Objects.nonNull(groupId) && Objects.isNull(scheduleDate)) {
-      getSchedule = scheduleMapper.findByGroup(groupId);
+    } else if (Objects.nonNull(groupName) && Objects.isNull(scheduleDate)) {
+      getSchedule = scheduleMapper.findByGroup(groupName);
     } else {
       getSchedule = scheduleMapper.findByDate(scheduleDate);
     }
@@ -35,7 +35,11 @@ public class ScheduleService {
         .orElseThrow(() -> new ResourceNotFoundException("schedule not found"));
   }
 
-  public Schedule createSchedule(Integer userId, int groupId, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+  public Schedule createSchedule(String userName, String groupName, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+    int uId = scheduleMapper.findByUserName(userName);
+    int gId = scheduleMapper.findByGroupName(groupName);
+    String userId =String.valueOf(uId);
+    String groupId = String.valueOf(gId);
     Schedule schedule = new Schedule(null, userId, groupId, title, scheduleDate, startTime, endTime, comment);
     scheduleMapper.create(schedule);
     return schedule;

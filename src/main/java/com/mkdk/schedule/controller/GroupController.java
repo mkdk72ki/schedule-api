@@ -40,7 +40,7 @@ public class GroupController {
 
   @PostMapping("/groups")
   public ResponseEntity<MessageResponse> createGroup(@RequestBody @Validated GroupCreateForm form, UriComponentsBuilder uriComponentsBuilder) {
-    Group group = groupService.createGroup(form.getGroupName(), form.getGroupPassword());
+    Group group = groupService.createGroup(form.getGroupName(), form.getGroupCode(), form.getGroupPassword());
     URI uri = uriComponentsBuilder.path("/group/{groupId}").buildAndExpand(group.getGroupId()).toUri();
     MessageResponse body = new MessageResponse("登録しました");
     return ResponseEntity.created(uri).body(body);
@@ -48,7 +48,7 @@ public class GroupController {
 
   @PatchMapping("/groups/{groupId}")
   public ResponseEntity<MessageResponse> updateGroup(@PathVariable int groupId, @RequestBody @Validated GroupUpdateForm form) {
-    groupService.updateGroup(groupId, form.getGroupName(), form.getGroupPassword());
+    groupService.updateGroup(groupId, form.getGroupName(), form.getGroupCode(), form.getGroupPassword());
     MessageResponse body = new MessageResponse("編集しました");
     return ResponseEntity.ok().body(body);
   }
