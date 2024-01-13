@@ -16,7 +16,7 @@ public class UserService {
     this.userMapper = userMapper;
   }
 
-  public List<User> findUsers() {
+  public List<User> findAll() {
     List<User> getUsers = userMapper.findAll();
     return getUsers;
   }
