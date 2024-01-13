@@ -7,7 +7,7 @@ CREATE TABLE users (
  id INT unsigned AUTO_INCREMENT,
  name VARCHAR(20) NOT NULL,
  code VARCHAR(20) NOT NULL UNIQUE,
- password VARCHAR(50) NOT NULL,
+ password VARCHAR(100) NOT NULL,
  PRIMARY KEY(id)
  );
 
@@ -15,7 +15,7 @@ CREATE TABLE groups (
  id INT unsigned AUTO_INCREMENT,
  name VARCHAR(20) NOT NULL,
  code VARCHAR(20) NOT NULL UNIQUE,
- password VARCHAR(30) NOT NULL,
+ password VARCHAR(100) NOT NULL,
  PRIMARY KEY(id)
  );
 
