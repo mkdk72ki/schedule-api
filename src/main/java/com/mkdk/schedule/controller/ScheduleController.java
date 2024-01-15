@@ -1,24 +1,16 @@
 package com.mkdk.schedule.controller;
 
 import com.mkdk.schedule.controller.form.ScheduleCreateForm;
-import com.mkdk.schedule.controller.form.ScheduleUpdateForm;
-import com.mkdk.schedule.entity.Schedule;
 import com.mkdk.schedule.service.ScheduleService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
-import java.time.LocalDate;
-import java.util.List;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class ScheduleController {
@@ -30,6 +22,38 @@ public class ScheduleController {
   }
 
   @GetMapping("/schedule")
+  public ModelAndView showList(ModelAndView modelAndView) {
+    modelAndView.setViewName("/schedule/list");
+    modelAndView.addObject("scheduleList", scheduleService.findAll());
+    return modelAndView;
+  }
+
+  @GetMapping("/schedule/createForm")
+  public ModelAndView showCreateForm(@ModelAttribute ScheduleCreateForm form, ModelAndView modelAndView) {
+    modelAndView.setViewName("/schedule/createForm");
+    modelAndView.addObject("createForm");
+    return modelAndView;
+  }
+
+  @PostMapping("/schedule")
+  public ModelAndView create(@Validated ScheduleCreateForm form, BindingResult bindingResult, ModelAndView modelAndView) {
+    if (bindingResult.hasErrors()) {
+      return showCreateForm(form, modelAndView);
+    }
+    modelAndView.setViewName("redirect:/schedule");
+    modelAndView.addObject("create", scheduleService.createSchedule(form.getUserName(), form.getGroupName(), form.getTitle(), form.getScheduleDate(), form.getStartTime(), form.getEndTime(), form.getComment()));
+    return modelAndView;
+  }
+
+  @DeleteMapping("/schedule/{scheduleId}")
+  public ModelAndView delete(@PathVariable(value = "scheduleId") int scheduleId, ModelAndView modelAndView) {
+    modelAndView.setViewName("redirect:/schedule");
+    scheduleService.deleteSchedule(scheduleId);
+    return modelAndView;
+  }
+
+  /*
+  @GetMapping("/a/schedule")
   public List<Schedule> findSchedule(@RequestParam(required = false) String groupName, LocalDate scheduleDate) {
     return scheduleService.findSchedule(groupName, scheduleDate);
   }
@@ -62,5 +86,6 @@ public class ScheduleController {
     MessageResponse body = new MessageResponse("削除しました");
     return ResponseEntity.ok().body(body);
   }
+   */
 
 }

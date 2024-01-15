@@ -18,6 +18,10 @@ public class ScheduleService {
     this.scheduleMapper = scheduleMapper;
   }
 
+  public List<Schedule> findAll() {
+    return scheduleMapper.findAll();
+  }
+
   public List<Schedule> findSchedule(String groupName, LocalDate scheduleDate) {
     List<Schedule> getSchedule;
     if (Objects.isNull(groupName) && Objects.isNull(scheduleDate)) {
@@ -38,7 +42,7 @@ public class ScheduleService {
   public Schedule createSchedule(String userName, String groupName, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     int uId = scheduleMapper.findByUserName(userName);
     int gId = scheduleMapper.findByGroupName(groupName);
-    String userId =String.valueOf(uId);
+    String userId = String.valueOf(uId);
     String groupId = String.valueOf(gId);
     Schedule schedule = new Schedule(null, userId, groupId, title, scheduleDate, startTime, endTime, comment);
     scheduleMapper.create(schedule);

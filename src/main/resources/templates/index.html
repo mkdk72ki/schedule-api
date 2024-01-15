@@ -10,6 +10,7 @@
 <ul>
     <li sec:authorize="hasAuthority('ADMIN')"><a href="./users/list.html" th:href="@{/users}">ユーザー一覧</a></li>
     <li sec:authorize="hasAuthority('ADMIN')"><a href="./groups/list.html" th:href="@{/groups}">グループ一覧</a></li>
+    <li><a href="./schedule/list.html" th:href="@{/schedule}">スケジュール一覧</a></li>
     <li><a href="./logout.html" th:href="@{/logout}">ログアウト</a></li>
 </ul>
 </body>
