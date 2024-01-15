@@ -17,7 +17,7 @@ public class GroupService {
     this.groupMapper = groupMapper;
   }
 
-  public List<Group> findGroups() {
+  public List<Group> findAll() {
     List<Group> getGroups = groupMapper.findAll();
     return getGroups;
   }
