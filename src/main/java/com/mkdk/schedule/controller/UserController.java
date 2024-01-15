@@ -46,6 +46,7 @@ public class UserController {
     return modelAndView;
   }
 
+/*
   @GetMapping("/a/users")
   public List<User> findUsers() {
     return userService.findAll();
@@ -56,23 +57,26 @@ public class UserController {
     User user = userService.findById(userId);
     return ResponseEntity.ok().body(user);
   }
+*/
 
   @PostMapping("/users")
   public ModelAndView create(@Validated UserCreateForm form , BindingResult bindingResult, ModelAndView modelAndView){
     if (bindingResult.hasErrors()) {
       return showCreateForm(form,modelAndView);
     }    modelAndView.setViewName("redirect:/users");
-    modelAndView.addObject("create",userService.createUser(form.getUserName(), form.getUserCode(), form.getUserPassword()));
+    modelAndView.addObject("create",userService.createUser(form.getUserName(), form.getUserCode(), form.getUserPassword(), form.getAuthority()));
     return modelAndView;
   }
 
+  /*
   @PostMapping("/a/users")
-  public ResponseEntity<MessageResponse> createUser(@RequestBody @Validated UserCreateForm form, UriComponentsBuilder uriComponentsBuilder) {
-    User user = userService.createUser(form.getUserName(), form.getUserCode(), form.getUserPassword());
+    public ResponseEntity<MessageResponse> createUser(@RequestBody @Validated UserCreateForm form, UriComponentsBuilder uriComponentsBuilder) {
+    userService.createUser(form.getUserName(), form.getUserCode(), form.getUserPassword(), form.getAuthority());
     URI uri = uriComponentsBuilder.path("/users/{userId}").buildAndExpand(user.getUserId()).toUri();
     MessageResponse body = new MessageResponse("登録しました");
     return ResponseEntity.created(uri).body(body);
   }
+
 
   @PatchMapping("/a/users/{userId}")
   public ResponseEntity<MessageResponse> updateUser(@PathVariable int userId, @RequestBody @Validated UserUpdateForm form) {
@@ -87,5 +91,6 @@ public class UserController {
     MessageResponse body = new MessageResponse("削除しました");
     return ResponseEntity.ok().body(body);
   }
+*/
 
 }

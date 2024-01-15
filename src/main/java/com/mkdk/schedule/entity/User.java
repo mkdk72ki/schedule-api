@@ -10,11 +10,18 @@ public class User {
 
   private String userPassword;
 
-  public User(Integer userId, String userName, String userCode, String userPassword) {
+  private Authority authority;
+
+  public enum Authority {
+    ADMIN, USER
+  }
+
+  public User(Integer userId, String userName, String userCode, String userPassword, Authority authority) {
     this.userId = userId;
     this.userName = userName;
     this.userCode = userCode;
     this.userPassword = userPassword;
+    this.authority = authority;
   }
 
   public Integer getUserId() {
@@ -43,6 +50,14 @@ public class User {
 
   public void setUserPassword(String userPassword) {
     this.userPassword = userPassword;
+  }
+
+  public Authority getAuthority() {
+    return authority;
+  }
+
+  public void setAuthority(Authority authority) {
+    this.authority = authority;
   }
 
   public void update(String userName, String userCode, String userPassword) {

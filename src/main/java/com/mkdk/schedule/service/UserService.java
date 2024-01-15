@@ -4,6 +4,8 @@ import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
 import com.mkdk.schedule.mapper.UserMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +13,14 @@ import java.util.List;
 @Service
 public class UserService {
   private final UserMapper userMapper;
+  private final PasswordEncoder passwordEncoder;
 
-  public UserService(UserMapper userMapper) {
+  public UserService(UserMapper userMapper, PasswordEncoder passwordEncoder) {
     this.userMapper = userMapper;
+    this.passwordEncoder = passwordEncoder;
   }
 
+  @PreAuthorize("hasAuthority('ADMIN')")
   public List<User> findAll() {
     List<User> getUsers = userMapper.findAll();
     return getUsers;
@@ -26,8 +31,10 @@ public class UserService {
         .orElseThrow(() -> new ResourceNotFoundException("user not found"));
   }
 
-  public User createUser(String userName, String userCode, String userPassword) {
-    User user = new User(null, userName, userCode, userPassword);
+  @PreAuthorize("hasAuthority('ADMIN')")
+  public User createUser(String userName, String userCode, String userPassword, String authority) {
+    var encodedPassword = passwordEncoder.encode(userPassword);
+    User user = new User(null, userName, userCode, encodedPassword, User.Authority.valueOf(authority));
     if (userMapper.findByCode(user.getUserCode()).isPresent()) {
       throw new ResourceExistsException("code already exists");
     } else {

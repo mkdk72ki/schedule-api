@@ -23,7 +23,7 @@ public interface UserMapper {
   @Select("SELECT * FROM users WHERE code = #{userCode}")
   Optional<User> findByCode(String userCode);
 
-  @Insert("INSERT INTO users (id, name, code, password) VALUES (#{userId}, #{userName}, #{userCode}, #{userPassword})")
+  @Insert("INSERT INTO users (id, name, code, password, authority) VALUES (#{userId}, #{userName}, #{userCode}, #{userPassword}, #{authority})")
   @Options(useGeneratedKeys = true, keyProperty = "userId")
   void create(User user);
 
