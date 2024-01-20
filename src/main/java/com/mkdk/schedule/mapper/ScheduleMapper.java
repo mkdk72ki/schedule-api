@@ -1,5 +1,6 @@
 package com.mkdk.schedule.mapper;
 
+import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.Schedule;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -14,8 +15,11 @@ import java.util.Optional;
 
 @Mapper
 public interface ScheduleMapper {
-  @Select("SELECT s.id, u.name as user_name, g.name as group_name, s.title, s.skd_date, s.s_time, s.e_time, s.comment FROM schedule s JOIN users u ON s.user_id = u.id JOIN `groups` g ON s.group_id = g.id")
+  @Select("SELECT s.id, u.name as user_name, g.name as group_name, s.title, s.skd_date, s.s_time, s.e_time, s.comment FROM schedule s JOIN users u ON s.user_id = u.id JOIN `groups` g ON s.group_id = g.id  ORDER BY s.skd_date")
   List<Schedule> findAll();
+
+  @Select("SELECT * FROM `groups`")
+  List<Group> findAllGroups();
 
   @Select("SELECT s.id, u.name as user_name, g.name as group_name, s.title, s.skd_date, s.s_time, s.e_time, s.comment FROM schedule s JOIN users u ON s.user_id = u.id JOIN `groups` g ON s.group_id = g.id WHERE g.name LIKE CONCAT(#{groupName})")
   List<Schedule> findByGroup(String groupName);
@@ -26,11 +30,8 @@ public interface ScheduleMapper {
   @Select("SELECT * FROM schedule WHERE id = #{scheduleId}")
   Optional<Schedule> findById(int scheduleId);
 
-  @Select("SELECT id FROM users WHERE name LIKE CONCAT(#{userName})")
-  int findByUserName(String userName);
-
-  @Select("SELECT id FROM `groups` WHERE name LIKE CONCAT(#{groupName})")
-  int findByGroupName(String groupName);
+  @Select("SELECT id FROM users WHERE code = #{userCode}")
+  Integer findByUserCode(String userCode);
 
   @Insert("INSERT INTO schedule (id, user_id, group_id, title, skd_date, s_time, e_time, comment) VALUES (#{scheduleId}, #{userName}, #{groupName}, #{title}, #{scheduleDate}, #{startTime}, #{endTime}, #{comment})")
   @Options(useGeneratedKeys = true, keyProperty = "scheduleId")

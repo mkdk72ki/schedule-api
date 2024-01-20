@@ -11,9 +11,6 @@ import java.time.LocalTime;
 
 public class ScheduleCreateForm {
 
-  @NotNull
-  private String userName;
-
   @NotNull(message = "選択してください")
   private String groupName;
 
@@ -21,8 +18,6 @@ public class ScheduleCreateForm {
   @Length(max = 20, message = "20字以内で入力してください")
   private String title;
 
-  @NotNull(message = "入力してください")
-  @DateTimeFormat(pattern = "yyyy-mm-dd")
   private LocalDate scheduleDate;
 
   @DateTimeFormat(pattern = "HH:mm")
@@ -34,18 +29,13 @@ public class ScheduleCreateForm {
   @Length(max = 100, message = "100字以内で入力してください")
   private String comment;
 
-  public ScheduleCreateForm(String userName, String groupName, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
-    this.userName = userName;
+  public ScheduleCreateForm(String groupName, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     this.groupName = groupName;
     this.title = title;
     this.scheduleDate = scheduleDate;
     this.startTime = startTime;
     this.endTime = endTime;
     this.comment = comment;
-  }
-
-  public String getUserName() {
-    return userName;
   }
 
   public String getGroupName() {

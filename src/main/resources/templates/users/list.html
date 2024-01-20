@@ -13,13 +13,30 @@
     <thead>
     <tr>
         <th>ユーザー名</th>
+        <th>ユーザーID</th>
         <th>権限</th>
+        <th>編集</th>
+        <th>削除</th>>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user : ${userList}">
-        <th th:text="${user.userName}">(username)</th>
+        <td th:text="${user.userName}">(username)</td>
+        <td th:text="${user.userCode}">(usercode)</td>>
         <td th:text="${user.authority}">(authority)</td>
+        <td>
+            <form th:action="@{/users/updateForm/{userId}(userId=${user.userId})}">
+                <input type="submit" class="btn btn-outline-danger" th:field="*{userName}">
+                <input type="hidden" name="userId" th:value="${user.userId}">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/users/{userId}(userId=${user.userId})}" method="post">
+                <input type="submit" class="btn btn-outline-danger" name="delete" value="削除">
+                <input type="hidden" name="_method" value="delete">
+                <input type="hidden" name="userId" th:value="${user.userId}">
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

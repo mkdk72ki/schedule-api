@@ -1,13 +1,18 @@
 package com.mkdk.schedule.service;
 
+import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.Schedule;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
 import com.mkdk.schedule.mapper.ScheduleMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -39,11 +44,22 @@ public class ScheduleService {
         .orElseThrow(() -> new ResourceNotFoundException("schedule not found"));
   }
 
-  public Schedule createSchedule(String userName, String groupName, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
-    int uId = scheduleMapper.findByUserName(userName);
-    int gId = scheduleMapper.findByGroupName(groupName);
+  public Map<String, Integer> getGroupMap() {
+    List<Group> groups = scheduleMapper.findAllGroups();
+    Map<String, Integer> groupMap = new LinkedHashMap<>();
+    for(Group g : groups) {
+      String groupName = g.getGroupName();
+      Integer groupId = g.getGroupId();
+      groupMap.put(groupName, groupId);
+    }
+    return groupMap;
+  }
+
+  public Schedule createSchedule(String userCode, String groupName, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
+    int uId = scheduleMapper.findByUserCode(userCode);
+    Map<String, Integer> groupMap = this.getGroupMap();
     String userId = String.valueOf(uId);
-    String groupId = String.valueOf(gId);
+    String groupId = String.valueOf(groupMap.get(groupName));
     Schedule schedule = new Schedule(null, userId, groupId, title, scheduleDate, startTime, endTime, comment);
     scheduleMapper.create(schedule);
     return schedule;

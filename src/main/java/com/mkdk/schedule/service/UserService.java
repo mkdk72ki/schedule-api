@@ -31,6 +31,10 @@ public class UserService {
         .orElseThrow(() -> new ResourceNotFoundException("user not found"));
   }
 
+  public Integer findId(String userCode){
+    return userMapper.findIdByCode(userCode);
+  }
+
   @PreAuthorize("hasAuthority('ADMIN')")
   public User createUser(String userName, String userCode, String userPassword, String authority) {
     var encodedPassword = passwordEncoder.encode(userPassword);
@@ -43,10 +47,11 @@ public class UserService {
     }
   }
 
-  public void updateUser(int userId, String userName, String userCode, String userPassword) {
+  public void updateUser(int userId, String userName, String userCode, String userPassword, String authority) {
     User user = userMapper.findById(userId)
         .orElseThrow(() -> new ResourceNotFoundException("user not found"));
-    user.update(userName, userCode, userPassword);
+    var encodedPassword = passwordEncoder.encode(userPassword);
+    user.update(userName, userCode, encodedPassword,authority);
     userMapper.update(user);
   }
 
