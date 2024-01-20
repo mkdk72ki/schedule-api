@@ -68,10 +68,10 @@ public class GroupController {
   }
 
   @DeleteMapping("/groups/{groupId}")
-  public ResponseEntity<MessageResponse> deleteGroup(@PathVariable int groupId) {
+  public ModelAndView delete(@PathVariable(value = "groupId") int groupId, ModelAndView modelAndView) {
+    modelAndView.setViewName("redirect:/groups");
     groupService.deleteGroup(groupId);
-    MessageResponse body = new MessageResponse("削除しました");
-    return ResponseEntity.ok().body(body);
+    return modelAndView;
   }
 
 }
