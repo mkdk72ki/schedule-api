@@ -24,6 +24,10 @@ public interface GroupMapper {
   @Select("SELECT * FROM `groups` WHERE code = #{groupCode}")
   Optional<Group> findByCode(String groupCode);
 
+  @Select("SELECT * FROM `groups` WHERE code = #{groupCode} AND password = #{groupPassword}")
+  Optional<Group> findGroup(String groupCode, String groupPassword);
+
+
   @Select("SELECT * FROM users u INNER JOIN belonging b ON u.id = b.user_id INNER JOIN `groups` g ON b.group_id = g.id WHERE b.group_id = #{groupId}")
   List<User> belongingUser(int groupId);
 

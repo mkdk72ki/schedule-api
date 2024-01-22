@@ -49,7 +49,7 @@ CREATE TABLE schedule (
  INSERT INTO groups (id, name, password) VALUES
  (1, "A", "groupA"),(2, "B", "groupB");
 
- INSERT INTO belonging (id, user_id, group_id) VALUES
+ INSERT INTO belonging (user_id, group_id) VALUES
  (1, 1), (2, 1), (3, 2), (1, 2);
 
  INSERT INTO schedule (id, user_id, group_id, title, skd_date, s_time, e_time, comment) VALUES

@@ -4,22 +4,22 @@ import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
+import com.mkdk.schedule.mapper.BelongingMapper;
 import com.mkdk.schedule.mapper.GroupMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GroupService {
 
   private final GroupMapper groupMapper;
+  private final BelongingMapper belongingMapper;
 
-  public GroupService(GroupMapper groupMapper) {
+  public GroupService(GroupMapper groupMapper, BelongingMapper belongingMapper) {
     this.groupMapper = groupMapper;
+    this.belongingMapper = belongingMapper;
   }
 
   @PreAuthorize("hasAuthority('ADMIN')")
