@@ -4,6 +4,7 @@ import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.Schedule;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
 import com.mkdk.schedule.mapper.ScheduleMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class ScheduleService {
     this.scheduleMapper = scheduleMapper;
   }
 
+  @PreAuthorize("hasAuthority('ADMIN')")
   public List<Schedule> findAll() {
     return scheduleMapper.findAll();
   }

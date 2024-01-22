@@ -31,8 +31,8 @@ public class SecurityConfig {
         )
         .authorizeHttpRequests(authorizeRequests -> authorizeRequests
             .requestMatchers("/login").permitAll()
-            .requestMatchers(antMatcher("/users/**")).hasAuthority("ADMIN")
-            .requestMatchers(antMatcher("/groups/**")).hasAuthority("ADMIN")
+            .requestMatchers(antMatcher("/users/admin/**")).hasAuthority("ADMIN")
+            .requestMatchers(antMatcher("/groups/admin/**")).hasAuthority("ADMIN")
             .anyRequest().authenticated()
         );
     return http.build();
