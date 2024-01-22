@@ -47,6 +47,13 @@ public class UserController {
     return modelAndView;
   }
 
+  @GetMapping("/users")
+  public ModelAndView showInfo(@AuthenticationPrincipal CustomUserDetails user,ModelAndView modelAndView){
+    modelAndView.setViewName("/users/info");
+    modelAndView.addObject("userInfo", userService.findById(user.getUserId()));
+    return modelAndView;
+  }
+
   @GetMapping("/users/createForm")
   public ModelAndView showCreateForm(@ModelAttribute UserCreateForm form, ModelAndView modelAndView){
     modelAndView.setViewName("/users/createForm");
