@@ -18,14 +18,6 @@ public class User implements UserDetails {
 
   private Authority authority;
 
-  public User(Integer userId, String userName, String userCode, String userPassword, Authority authority) {
-    this.userId = userId;
-    this.userName = userName;
-    this.userCode = userCode;
-    this.userPassword = userPassword;
-    this.authority = authority;
-  }
-
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return null;
@@ -43,22 +35,34 @@ public class User implements UserDetails {
 
   @Override
   public boolean isAccountNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isAccountNonLocked() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isCredentialsNonExpired() {
-    return false;
+    return true;
   }
 
   @Override
   public boolean isEnabled() {
-    return false;
+    return true;
+  }
+
+  public enum Authority {
+    ADMIN, USER
+  }
+
+  public User(Integer userId, String userName, String userCode, String userPassword, Authority authority) {
+    this.userId = userId;
+    this.userName = userName;
+    this.userCode = userCode;
+    this.userPassword = userPassword;
+    this.authority = authority;
   }
 
   public Integer getUserId() {
@@ -110,10 +114,6 @@ public class User implements UserDetails {
     if (authority != null) {
       this.setAuthority(Authority.valueOf(authority));
     }
-  }
-
-  public enum Authority {
-    ADMIN, USER
   }
 
 }

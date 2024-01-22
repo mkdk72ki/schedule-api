@@ -7,11 +7,16 @@
 </head>
 <body>
 <h1 class="mt-3">スケジュール共有アプリ</h1>
-<div sec:authentication="name"></div>
+
+<h2 sec:authorize="hasAuthority('ADMIN')" class="mt-5">管理者メニュー</h2>
 <ul>
-    <li sec:authorize="hasAuthority('ADMIN')"><a href="./users/list.html" th:href="@{/users}">ユーザー一覧</a></li>
-    <li sec:authorize="hasAuthority('ADMIN')"><a href="./groups/list.html" th:href="@{/groups}">グループ一覧</a></li>
-    <li><a href="./schedule/list.html" th:href="@{/schedule}">スケジュール一覧</a></li>
+    <li sec:authorize="hasAuthority('ADMIN')"><a href="./users/list.html" th:href="@{/users/admin}">ユーザー一覧</a></li>
+    <li sec:authorize="hasAuthority('ADMIN')"><a href="./groups/list.html" th:href="@{/groups/admin}">グループ一覧</a></li>
+    <li sec:authorize="hasAuthority('ADMIN')"><a href="./schedule/list.html" th:href="@{/schedule/admin}">スケジュール一覧</a></li>
+</ul>
+<h2 class="mt-3">ユーザーメニュー</h2>
+    <li><a href="./groups/userList.html" th:href="@{/groups}">グループリスト</a></li>
+    <li><a href="./schedule/list.html" th:href="@{/schedule}">スケジュール確認</a></li>
     <li><a href="./logout.html" th:href="@{/logout}">ログアウト</a></li>
 </ul>
 </body>

@@ -28,7 +28,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             user -> new CustomUserDetails(
                 user.getUserCode(),
                 user.getUserPassword(),
-                toGrantedAuthorityList(user.getAuthority())
+                toGrantedAuthorityList(user.getAuthority()),
+                user.getUserId()
             )
         )
         .orElseThrow(

@@ -1,11 +1,14 @@
 package com.mkdk.schedule.controller;
 
+import com.mkdk.schedule.CustomUserDetails;
 import com.mkdk.schedule.controller.form.GroupCreateForm;
 import com.mkdk.schedule.controller.form.GroupUpdateForm;
 import com.mkdk.schedule.controller.form.UserCreateForm;
 import com.mkdk.schedule.entity.Group;
+import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.service.GroupService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,10 +34,25 @@ public class GroupController {
     this.groupService = groupService;
   }
 
-  @GetMapping("/groups")
+  @GetMapping("/groups/admin")
   public ModelAndView showList(ModelAndView modelAndView){
     modelAndView.setViewName("/groups/list");
     modelAndView.addObject("groupList", groupService.findAll());
+    return modelAndView;
+  }
+
+  @GetMapping("/groups/userList/{groupId}")
+  public ModelAndView showUserList(@PathVariable int groupId, ModelAndView modelAndView){
+    modelAndView.setViewName("/groups/userList");
+    modelAndView.addObject("groupUserList", groupService.findBelongingUser(groupId));
+    modelAndView.addObject("group", groupService.findById(groupId));
+    return modelAndView;
+  }
+
+  @GetMapping("/groups")
+  public ModelAndView showGroupList(@AuthenticationPrincipal CustomUserDetails user, ModelAndView modelAndView){
+    modelAndView.setViewName("/users/groupList");
+    modelAndView.addObject("userGroupList", groupService.findBelongingGroups(user.getUserId()));
     return modelAndView;
   }
 
@@ -48,8 +66,8 @@ public class GroupController {
   @PostMapping("/groups")
   public ModelAndView create(@Validated GroupCreateForm form , BindingResult bindingResult, ModelAndView modelAndView){
     if (bindingResult.hasErrors()) {
-      return showCreateForm(form,modelAndView);
-    }    modelAndView.setViewName("redirect:/groups");
+      return showCreateForm(form,modelAndView);}
+    modelAndView.setViewName("redirect:/groups");
     modelAndView.addObject("create",groupService.createGroup(form.getGroupName(), form.getGroupCode(), form.getGroupPassword()));
     return modelAndView;
   }

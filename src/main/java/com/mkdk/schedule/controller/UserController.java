@@ -1,11 +1,14 @@
 package com.mkdk.schedule.controller;
 
+import com.mkdk.schedule.CustomUserDetails;
 import com.mkdk.schedule.controller.form.UserCreateForm;
 import com.mkdk.schedule.controller.form.UserUpdateForm;
+import com.mkdk.schedule.entity.Group;
+import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.service.UserService;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -36,7 +40,7 @@ public class UserController {
     this.userService = userService;
   }
 
-  @GetMapping("/users")
+  @GetMapping("/users/admin")
   public ModelAndView showList(ModelAndView modelAndView){
     modelAndView.setViewName("/users/list");
     modelAndView.addObject("userList", userService.findAll());
@@ -61,8 +65,8 @@ public class UserController {
   public ModelAndView create(@Validated UserCreateForm form , BindingResult bindingResult, ModelAndView modelAndView){
     if (bindingResult.hasErrors()) {
       return showCreateForm(form,modelAndView);
-    }    modelAndView.setViewName("redirect:/users");
-    modelAndView.addObject("create",userService.createUser(form.getUserCode(), form.getUserCode(), form.getUserPassword(), form.getAuthority()));
+    }    modelAndView.setViewName("redirect:/users/admin");
+    modelAndView.addObject("create",userService.createUser(form.getUserName(), form.getUserCode(), form.getUserPassword(), form.getAuthority()));
     return modelAndView;
   }
 
@@ -70,14 +74,14 @@ public class UserController {
   public ModelAndView update(@AuthenticationPrincipal User user, @PathVariable int userId, @Validated UserUpdateForm form , BindingResult bindingResult, ModelAndView modelAndView){
     if (bindingResult.hasErrors()) {
       return showUpdateForm(userId, form, modelAndView);
-    }    modelAndView.setViewName("redirect:/users");
+    }    modelAndView.setViewName("redirect:/users/admin");
    userService.updateUser(userService.findId(user.getUsername()), form.getUserName(), form.getUserCode(), form.getUserPassword(), form.getAuthority());
     return modelAndView;
   }
 
   @DeleteMapping("/users/{userId}")
   public ModelAndView delete(@PathVariable(value = "userId") int userId, ModelAndView modelAndView){
-    modelAndView.setViewName("redirect:/users");
+    modelAndView.setViewName("redirect:/users/admin");
     userService.deleteUser(userId);
     return modelAndView;
   }

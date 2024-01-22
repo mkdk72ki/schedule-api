@@ -1,12 +1,17 @@
 package com.mkdk.schedule.service;
 
 import com.mkdk.schedule.entity.Group;
+import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
 import com.mkdk.schedule.mapper.GroupMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -17,9 +22,20 @@ public class GroupService {
     this.groupMapper = groupMapper;
   }
 
+  @PreAuthorize("hasAuthority('ADMIN')")
   public List<Group> findAll() {
     List<Group> getGroups = groupMapper.findAll();
     return getGroups;
+  }
+
+  public List<User> findBelongingUser(int groupId){
+    List<User> users = groupMapper.belongingUser(groupId);
+    return users;
+  }
+
+  public List<Group> findBelongingGroups(Integer userId){
+    List<Group> groupName = groupMapper.belongingGroup(userId);
+    return groupName;
   }
 
   public Group findById(int groupId) {

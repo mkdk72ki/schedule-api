@@ -1,5 +1,6 @@
 package com.mkdk.schedule.service;
 
+import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
@@ -8,7 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -35,7 +39,6 @@ public class UserService {
     return userMapper.findIdByCode(userCode);
   }
 
-  @PreAuthorize("hasAuthority('ADMIN')")
   public User createUser(String userName, String userCode, String userPassword, String authority) {
     var encodedPassword = passwordEncoder.encode(userPassword);
     User user = new User(null, userName, userCode, encodedPassword, User.Authority.valueOf(authority));
