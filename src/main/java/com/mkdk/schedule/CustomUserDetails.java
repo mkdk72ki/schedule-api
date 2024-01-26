@@ -10,7 +10,7 @@ public class CustomUserDetails extends User {
 
   public CustomUserDetails(String userCode, String userPassword, Collection<? extends GrantedAuthority> authorities, Integer userId) {
     super(userCode, userPassword, authorities);
-    this.userId=userId;
+    this.userId = userId;
   }
 
 

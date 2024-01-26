@@ -2,11 +2,8 @@ package com.mkdk.schedule.controller;
 
 import com.mkdk.schedule.CustomUserDetails;
 import com.mkdk.schedule.controller.form.BelongingForm;
-import com.mkdk.schedule.controller.form.GroupCreateForm;
 import com.mkdk.schedule.service.BelongingService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,21 +21,21 @@ public class BelongingController {
   }
 
   @GetMapping("/groups/belongingForm")
-  public ModelAndView showBelongingForm(@ModelAttribute BelongingForm form, ModelAndView modelAndView){
+  public ModelAndView showBelongingForm(@ModelAttribute BelongingForm form, ModelAndView modelAndView) {
     modelAndView.setViewName("/groups/belongingForm");
     modelAndView.addObject("belongingForm");
     return modelAndView;
   }
 
   @PostMapping("/groups/belonging")
-  public ModelAndView belong(@AuthenticationPrincipal CustomUserDetails user, BelongingForm form, ModelAndView modelAndView){
+  public ModelAndView belong(@AuthenticationPrincipal CustomUserDetails user, BelongingForm form, ModelAndView modelAndView) {
     modelAndView.setViewName("redirect:/groups");
     belongingService.belongGroup(user.getUserId(), form.getGroupCode(), form.getGroupPassword());
     return modelAndView;
   }
 
   @DeleteMapping("/groups/belonging/{groupId}")
-  public ModelAndView leave(@AuthenticationPrincipal CustomUserDetails user,@PathVariable(value = "groupId") int groupId, ModelAndView modelAndView) {
+  public ModelAndView leave(@AuthenticationPrincipal CustomUserDetails user, @PathVariable(value = "groupId") int groupId, ModelAndView modelAndView) {
     modelAndView.setViewName("redirect:/groups");
     belongingService.leaveGroup(user.getUserId(), groupId);
     return modelAndView;

@@ -1,6 +1,5 @@
 package com.mkdk.schedule.mapper;
 
-import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;

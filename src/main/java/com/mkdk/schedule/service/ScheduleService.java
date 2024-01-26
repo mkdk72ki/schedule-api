@@ -1,14 +1,10 @@
 package com.mkdk.schedule.service;
 
-import com.mkdk.schedule.CustomUserDetails;
-import com.mkdk.schedule.entity.Belonging;
 import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.Schedule;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
-import com.mkdk.schedule.mapper.BelongingMapper;
 import com.mkdk.schedule.mapper.ScheduleMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -43,7 +39,7 @@ public class ScheduleService {
     return getSchedule;
   }
 
-  public List<Schedule> checkSchedule(int userId,Integer groupId, LocalDate scheduleDate) {
+  public List<Schedule> checkSchedule(int userId, Integer groupId, LocalDate scheduleDate) {
     List<Schedule> getSchedule;
     if (Objects.isNull(groupId) && Objects.isNull(scheduleDate)) {
       scheduleMapper.intoGroupList(userId);
@@ -64,7 +60,7 @@ public class ScheduleService {
   public Map<String, Integer> getGroupMap() {
     List<Group> groups = scheduleMapper.findAllGroups();
     Map<String, Integer> groupMap = new LinkedHashMap<>();
-    for(Group g : groups) {
+    for (Group g : groups) {
       String groupName = g.getGroupName();
       Integer groupId = g.getGroupId();
       groupMap.put(groupName, groupId);
@@ -75,7 +71,7 @@ public class ScheduleService {
   public Map<String, Integer> getBelongingGroupMap(int userId) {
     List<Group> groups = scheduleMapper.belongingGroup(userId);
     Map<String, Integer> belongingGroupMap = new LinkedHashMap<>();
-    for(Group g : groups) {
+    for (Group g : groups) {
       String groupName = g.getGroupName();
       Integer groupId = g.getGroupId();
       belongingGroupMap.put(groupName, groupId);

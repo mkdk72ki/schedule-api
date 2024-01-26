@@ -4,7 +4,6 @@ import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
-import com.mkdk.schedule.mapper.BelongingMapper;
 import com.mkdk.schedule.mapper.GroupMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -26,12 +25,12 @@ public class GroupService {
     return getGroups;
   }
 
-  public List<User> findBelongingUser(int groupId){
+  public List<User> findBelongingUser(int groupId) {
     List<User> users = groupMapper.belongingUser(groupId);
     return users;
   }
 
-  public List<Group> findBelongingGroups(Integer userId){
+  public List<Group> findBelongingGroups(Integer userId) {
     List<Group> groupName = groupMapper.belongingGroup(userId);
     return groupName;
   }

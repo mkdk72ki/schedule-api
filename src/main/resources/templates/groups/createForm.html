@@ -24,7 +24,8 @@
         <label for="passwordInput" class="form-label">パスワード</label>
         <input type="password" id="passwordInput" class="form-control" th:field="*{groupPassword}"
                th:classappend="${#fields.hasErrors('groupPassword')} ? is-invalid">
-        <p class="invalid-feedback" th:if="${#fields.hasErrors('groupPassword')}" th:errors="*{groupPassword}">(errors)</p>
+        <p class="invalid-feedback" th:if="${#fields.hasErrors('groupPassword')}" th:errors="*{groupPassword}">
+            (errors)</p>
     </div>
     <div class="mt-3">
         <button type="submit" class="btn btn-primary">作成</button>

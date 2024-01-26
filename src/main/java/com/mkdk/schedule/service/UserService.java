@@ -1,6 +1,5 @@
 package com.mkdk.schedule.service;
 
-import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
@@ -9,10 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {
@@ -35,7 +31,7 @@ public class UserService {
         .orElseThrow(() -> new ResourceNotFoundException("user not found"));
   }
 
-  public Integer findId(String userCode){
+  public Integer findId(String userCode) {
     return userMapper.findIdByCode(userCode);
   }
 
@@ -54,7 +50,7 @@ public class UserService {
     User user = userMapper.findById(userId)
         .orElseThrow(() -> new ResourceNotFoundException("user not found"));
     var encodedPassword = passwordEncoder.encode(userPassword);
-    user.update(userName, userCode, encodedPassword,authority);
+    user.update(userName, userCode, encodedPassword, authority);
     userMapper.update(user);
   }
 

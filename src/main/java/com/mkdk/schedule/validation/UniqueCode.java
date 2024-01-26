@@ -13,6 +13,8 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = UniqueCodeValidator.class)
 public @interface UniqueCode {
   String message() default "入力されたコードはすでに登録されています。別のコードを入力してください";
+
   Class<?>[] groups() default {};
+
   Class<? extends Payload>[] payload() default {};
 }

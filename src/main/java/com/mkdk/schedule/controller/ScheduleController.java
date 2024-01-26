@@ -4,8 +4,6 @@ import com.mkdk.schedule.CustomUserDetails;
 import com.mkdk.schedule.controller.form.ScheduleCreateForm;
 import com.mkdk.schedule.service.ScheduleService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,7 +32,7 @@ public class ScheduleController {
     Map<String, Integer> groupMap = scheduleService.getGroupMap();
     modelAndView.addObject("groupMap", groupMap);
     modelAndView.setViewName("/schedule/list-all");
-    modelAndView.addObject("scheduleList", scheduleService.findSchedule(groupId,scheduleDate));
+    modelAndView.addObject("scheduleList", scheduleService.findSchedule(groupId, scheduleDate));
     return modelAndView;
   }
 
@@ -43,7 +41,7 @@ public class ScheduleController {
     Map<String, Integer> groupMap = scheduleService.getBelongingGroupMap(user.getUserId());
     modelAndView.addObject("belongingGroupMap", groupMap);
     modelAndView.setViewName("/schedule/list");
-    modelAndView.addObject("scheduleList", scheduleService.checkSchedule(user.getUserId(),groupId,scheduleDate));
+    modelAndView.addObject("scheduleList", scheduleService.checkSchedule(user.getUserId(), groupId, scheduleDate));
     return modelAndView;
   }
 
@@ -59,7 +57,7 @@ public class ScheduleController {
   @PostMapping("/schedule")
   public ModelAndView create(@AuthenticationPrincipal CustomUserDetails user, @Validated ScheduleCreateForm form, BindingResult bindingResult, ModelAndView modelAndView) {
     if (bindingResult.hasErrors()) {
-      return showCreateForm(user,form, modelAndView);
+      return showCreateForm(user, form, modelAndView);
     }
     modelAndView.setViewName("redirect:/schedule");
     modelAndView.addObject("create", scheduleService.createSchedule(user.getUsername(), form.getGroupName(), form.getTitle(), form.getScheduleDate(), form.getStartTime(), form.getEndTime(), form.getComment()));

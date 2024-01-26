@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
@@ -18,7 +17,8 @@
     </thead>
     <tbody>
     <tr th:each="group : ${groupList}">
-        <td><a th:text="${group.groupName}" href="./users/groupList.html" th:href="@{/groups/userList/{groupId}(groupId=${group.groupId})}">(groupname)</a></td>
+        <td><a th:text="${group.groupName}" href="./users/groupList.html"
+               th:href="@{/groups/userList/{groupId}(groupId=${group.groupId})}">(groupname)</a></td>
         <td th:text="${group.groupCode}">(groupcode)</td>
         <td>
             <form th:action="@{/groups/{groupId}(groupId=${group.groupId})}" method="post">
