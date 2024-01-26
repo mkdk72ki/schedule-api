@@ -2,6 +2,8 @@ package com.mkdk.schedule.service;
 
 import com.mkdk.schedule.entity.Belonging;
 import com.mkdk.schedule.entity.Group;
+import com.mkdk.schedule.exception.PasswordException;
+import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
 import com.mkdk.schedule.mapper.BelongingMapper;
 import com.mkdk.schedule.mapper.GroupMapper;
@@ -23,10 +25,13 @@ public class BelongingService {
     Optional<Group> group = groupMapper.findGroup(groupCode, groupPassword);
     if (groupMapper.findByCode(groupCode).isEmpty()) {
       throw new ResourceNotFoundException("group not found");
-    } else if (group.isPresent()) {
-      Integer groupId = group.get().getGroupId();
-      Belonging belonging = new Belonging(userId, groupId);
-      belongingMapper.belong(belonging);
+    } else if (group.isEmpty()) {
+      throw new PasswordException("password doesn't matched");
+    } else if (belongingMapper.findGroupId(userId, group.get().getGroupId()).isPresent()) {
+      throw new ResourceExistsException("already belong to the group");
+    } else {
+      Belonging join = new Belonging(userId, group.get().getGroupId());
+      belongingMapper.belong(join);
     }
   }
 
