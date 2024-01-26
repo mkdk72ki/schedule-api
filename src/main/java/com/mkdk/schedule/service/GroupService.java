@@ -15,11 +15,9 @@ import java.util.List;
 public class GroupService {
 
   private final GroupMapper groupMapper;
-  private final BelongingMapper belongingMapper;
 
-  public GroupService(GroupMapper groupMapper, BelongingMapper belongingMapper) {
+  public GroupService(GroupMapper groupMapper) {
     this.groupMapper = groupMapper;
-    this.belongingMapper = belongingMapper;
   }
 
   @PreAuthorize("hasAuthority('ADMIN')")

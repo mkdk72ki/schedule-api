@@ -1,12 +1,14 @@
 package com.mkdk.schedule.service;
 
+import com.mkdk.schedule.CustomUserDetails;
+import com.mkdk.schedule.entity.Belonging;
 import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.Schedule;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
+import com.mkdk.schedule.mapper.BelongingMapper;
 import com.mkdk.schedule.mapper.ScheduleMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,12 +31,25 @@ public class ScheduleService {
     return scheduleMapper.findAll();
   }
 
-  public List<Schedule> findSchedule(String groupName, LocalDate scheduleDate) {
+  public List<Schedule> findSchedule(Integer groupId, LocalDate scheduleDate) {
     List<Schedule> getSchedule;
-    if (Objects.isNull(groupName) && Objects.isNull(scheduleDate)) {
+    if (Objects.isNull(groupId) && Objects.isNull(scheduleDate)) {
       getSchedule = scheduleMapper.findAll();
-    } else if (Objects.nonNull(groupName) && Objects.isNull(scheduleDate)) {
-      getSchedule = scheduleMapper.findByGroup(groupName);
+    } else if (Objects.nonNull(groupId) && Objects.isNull(scheduleDate)) {
+      getSchedule = scheduleMapper.findByGroup(groupId);
+    } else {
+      getSchedule = scheduleMapper.findByDate(scheduleDate);
+    }
+    return getSchedule;
+  }
+
+  public List<Schedule> checkSchedule(int userId,Integer groupId, LocalDate scheduleDate) {
+    List<Schedule> getSchedule;
+    if (Objects.isNull(groupId) && Objects.isNull(scheduleDate)) {
+      scheduleMapper.intoGroupList(userId);
+      getSchedule = scheduleMapper.checkSchedule();
+    } else if (Objects.nonNull(groupId) && Objects.isNull(scheduleDate)) {
+      getSchedule = scheduleMapper.findByGroup(groupId);
     } else {
       getSchedule = scheduleMapper.findByDate(scheduleDate);
     }
@@ -56,6 +71,18 @@ public class ScheduleService {
     }
     return groupMap;
   }
+
+  public Map<String, Integer> getBelongingGroupMap(int userId) {
+    List<Group> groups = scheduleMapper.belongingGroup(userId);
+    Map<String, Integer> belongingGroupMap = new LinkedHashMap<>();
+    for(Group g : groups) {
+      String groupName = g.getGroupName();
+      Integer groupId = g.getGroupId();
+      belongingGroupMap.put(groupName, groupId);
+    }
+    return belongingGroupMap;
+  }
+
 
   public Schedule createSchedule(String userCode, String groupName, String title, LocalDate scheduleDate, LocalTime startTime, LocalTime endTime, String comment) {
     int uId = scheduleMapper.findByUserCode(userCode);

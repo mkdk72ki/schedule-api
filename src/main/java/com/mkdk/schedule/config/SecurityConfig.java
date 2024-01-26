@@ -33,6 +33,7 @@ public class SecurityConfig {
             .requestMatchers("/login").permitAll()
             .requestMatchers(antMatcher("/users/admin/**")).hasAuthority("ADMIN")
             .requestMatchers(antMatcher("/groups/admin/**")).hasAuthority("ADMIN")
+            .requestMatchers(antMatcher("/schedule/admin/**")).hasAuthority("ADMIN")
             .anyRequest().authenticated()
         );
     return http.build();

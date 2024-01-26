@@ -11,11 +11,11 @@
 <a href="../createForm.html" th:href="@{/schedule/createForm}">作成</a>
 
 <div class="my-3">
-<form  th:action="@{/schedule}" th:object="${scheduleList}">
+<form  th:action="@{/schedule/admin}" th:object="${scheduleList}">
         <label for="inputGroup">グループ名</label>
         <select id="inputGroup" class="dropdown form-control" name="groupId">
             <option value="" selected></option>
-            <option th:each="item : ${belongingGroupMap}" th:value="${item.value}" th:text="${item.key}"></option>
+            <option th:each="item : ${groupMap}" th:value="${item.value}" th:text="${item.key}"></option>
         </select>
     <div class="mt-3">
     日付：<input type="date" name="scheduleDate">

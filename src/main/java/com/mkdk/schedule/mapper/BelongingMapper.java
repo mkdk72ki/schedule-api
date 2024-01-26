@@ -4,7 +4,6 @@ import com.mkdk.schedule.entity.Belonging;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 
 @Mapper
 public interface BelongingMapper {
