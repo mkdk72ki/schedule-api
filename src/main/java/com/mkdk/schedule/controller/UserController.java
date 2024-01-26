@@ -92,12 +92,6 @@ public class UserController {
     return modelAndView;
   }
 
-    @GetMapping("/users/{userId}")
-  public ResponseEntity<User> findById(@PathVariable int userId) {
-    User user = userService.findById(userId);
-    return ResponseEntity.ok().body(user);
-  }
-
   @PatchMapping("/a/users/{userId}")
   public ResponseEntity<MessageResponse> updateUser(@PathVariable int userId, @RequestBody @Validated UserUpdateForm form) {
     userService.updateUser(userId, form.getUserName(), form.getUserCode(), form.getUserPassword());
