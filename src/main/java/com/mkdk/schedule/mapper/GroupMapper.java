@@ -1,5 +1,6 @@
 package com.mkdk.schedule.mapper;
 
+import com.mkdk.schedule.entity.Belonging;
 import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.entity.User;
 import org.apache.ibatis.annotations.Delete;
@@ -27,7 +28,6 @@ public interface GroupMapper {
   @Select("SELECT * FROM `groups` WHERE code = #{groupCode} AND password = #{groupPassword}")
   Optional<Group> findGroup(String groupCode, String groupPassword);
 
-
   @Select("SELECT * FROM users u INNER JOIN belonging b ON u.id = b.user_id INNER JOIN `groups` g ON b.group_id = g.id WHERE b.group_id = #{groupId}")
   List<User> belongingUser(int groupId);
 
@@ -43,5 +43,16 @@ public interface GroupMapper {
 
   @Delete("DELETE FROM `groups` WHERE id = #{groupId}")
   void delete(int groupId);
+
+  // belonging
+
+  @Select("SELECT * FROM belonging WHERE user_id = #{userId} AND group_id = ${groupId}")
+  Optional<Belonging> findGroupId(int userId, int groupId);
+
+  @Insert("INSERT INTO belonging (user_id, group_id) VALUES (#{userId},#{groupId})")
+  void belong(Belonging belonging);
+
+  @Delete("DELETE FROM belonging WHERE user_id = #{userId} AND group_id = #{groupId}")
+  void leave(int userId, int groupId);
 
 }

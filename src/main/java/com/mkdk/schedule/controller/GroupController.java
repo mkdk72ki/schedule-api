@@ -1,6 +1,7 @@
 package com.mkdk.schedule.controller;
 
 import com.mkdk.schedule.CustomUserDetails;
+import com.mkdk.schedule.controller.form.BelongingForm;
 import com.mkdk.schedule.controller.form.GroupCreateForm;
 import com.mkdk.schedule.controller.form.GroupUpdateForm;
 import com.mkdk.schedule.entity.Group;
@@ -84,6 +85,29 @@ public class GroupController {
   public ModelAndView delete(@PathVariable(value = "groupId") int groupId, ModelAndView modelAndView) {
     modelAndView.setViewName("redirect:/groups");
     groupService.deleteGroup(groupId);
+    return modelAndView;
+  }
+
+  // belonging
+
+  @GetMapping("/groups/belongingForm")
+  public ModelAndView showBelongingForm(@ModelAttribute BelongingForm form, ModelAndView modelAndView) {
+    modelAndView.setViewName("/groups/belongingForm");
+    modelAndView.addObject("belongingForm");
+    return modelAndView;
+  }
+
+  @PostMapping("/groups/belonging")
+  public ModelAndView belong(@AuthenticationPrincipal CustomUserDetails user, BelongingForm form, ModelAndView modelAndView) {
+    modelAndView.setViewName("redirect:/groups");
+    groupService.belongGroup(user.getUserId(), form.getGroupCode(), form.getGroupPassword());
+    return modelAndView;
+  }
+
+  @DeleteMapping("/groups/belonging/{groupId}")
+  public ModelAndView leave(@AuthenticationPrincipal CustomUserDetails user, @PathVariable(value = "groupId") int groupId, ModelAndView modelAndView) {
+    modelAndView.setViewName("redirect:/groups");
+    groupService.leaveGroup(user.getUserId(), groupId);
     return modelAndView;
   }
 
