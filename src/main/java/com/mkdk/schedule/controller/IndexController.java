@@ -1,4 +1,4 @@
-package com.mkdk.schedule;
+package com.mkdk.schedule.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
