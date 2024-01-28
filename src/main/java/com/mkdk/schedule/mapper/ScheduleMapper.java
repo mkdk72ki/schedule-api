@@ -30,6 +30,9 @@ public interface ScheduleMapper {
   @Select("SELECT * FROM `groups` g INNER JOIN belonging b ON g.id = b.group_id INNER JOIN users u ON b.user_id = u.id WHERE b.user_id = #{userId}")
   List<Group> belongingGroup(int userId);
 
+  @Select("SELECT s.id, u.name as user_name, g.name as group_name, s.title, s.skd_date, s.s_time, s.e_time, s.comment FROM schedule s JOIN users u ON s.user_id = u.id JOIN `groups` g ON s.group_id = g.id WHERE g.id = #{groupId} AND s.skd_date = #{scheduleDate} ORDER BY s.skd_date")
+  List<Schedule> findByGroupAndDate(int groupId, LocalDate scheduleDate);
+
   @Select("SELECT s.id, u.name as user_name, g.name as group_name, s.title, s.skd_date, s.s_time, s.e_time, s.comment FROM schedule s JOIN users u ON s.user_id = u.id JOIN `groups` g ON s.group_id = g.id WHERE g.id = #{groupId} ORDER BY s.skd_date")
   List<Schedule> findByGroup(int groupId);
 

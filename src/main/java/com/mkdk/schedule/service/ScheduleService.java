@@ -31,7 +31,9 @@ public class ScheduleService {
     List<Schedule> getSchedule;
     if (Objects.isNull(groupId) && Objects.isNull(scheduleDate)) {
       getSchedule = scheduleMapper.findAll();
-    } else if (Objects.nonNull(groupId) && Objects.isNull(scheduleDate)) {
+    } else if (Objects.nonNull(groupId) && Objects.nonNull(scheduleDate)) {
+      getSchedule = scheduleMapper.findByGroupAndDate(groupId, scheduleDate);
+    } else if (Objects.nonNull(groupId)) {
       getSchedule = scheduleMapper.findByGroup(groupId);
     } else {
       getSchedule = scheduleMapper.findByDate(scheduleDate);
@@ -44,7 +46,9 @@ public class ScheduleService {
     if (Objects.isNull(groupId) && Objects.isNull(scheduleDate)) {
       scheduleMapper.intoGroupList(userId);
       getSchedule = scheduleMapper.checkSchedule();
-    } else if (Objects.nonNull(groupId) && Objects.isNull(scheduleDate)) {
+    } else if (Objects.nonNull(groupId) && Objects.nonNull(scheduleDate)) {
+      getSchedule = scheduleMapper.findByGroupAndDate(groupId, scheduleDate);
+    } else if (Objects.nonNull(groupId)) {
       getSchedule = scheduleMapper.findByGroup(groupId);
     } else {
       getSchedule = scheduleMapper.findByDate(scheduleDate);
