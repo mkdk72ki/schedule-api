@@ -59,12 +59,12 @@ public class GroupController {
   }
 
   @PostMapping("/groups")
-  public ModelAndView create(@Validated GroupCreateForm form, BindingResult bindingResult, ModelAndView modelAndView) {
+  public ModelAndView create(@AuthenticationPrincipal CustomUserDetails user, @Validated GroupCreateForm form, BindingResult bindingResult, ModelAndView modelAndView) {
     if (bindingResult.hasErrors()) {
       return showCreateForm(form, modelAndView);
     }
     modelAndView.setViewName("redirect:/groups");
-    modelAndView.addObject("create", groupService.createGroup(form.getGroupName(), form.getGroupCode(), form.getGroupPassword()));
+    modelAndView.addObject("create", groupService.createGroup(user.getUserId(), form.getGroupName(), form.getGroupCode(), form.getGroupPassword()));
     return modelAndView;
   }
 

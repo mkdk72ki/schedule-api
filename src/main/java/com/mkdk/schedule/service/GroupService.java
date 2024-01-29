@@ -47,13 +47,14 @@ public class GroupService {
         .orElseThrow(() -> new ResourceNotFoundException("group not found"));
   }
 
-  public Group createGroup(String groupName, String groupCode, String groupPassword) {
-    var encodedPassword = passwordEncoder.encode(groupPassword);
-    Group group = new Group(null, groupName, groupCode, encodedPassword);
+  public Group createGroup(int userId,String groupName, String groupCode, String groupPassword) {
+    Group group = new Group(null, groupName, groupCode, groupPassword);
     if (groupMapper.findByCode(group.getGroupCode()).isPresent()) {
       throw new ResourceExistsException("code already exists");
     } else {
       groupMapper.create(group);
+      Belonging join = new Belonging(userId, group.getGroupId());
+      groupMapper.belong(join);
       return group;
     }
   }
