@@ -7,7 +7,8 @@ CREATE TABLE users (
  id INT unsigned AUTO_INCREMENT,
  name VARCHAR(20) NOT NULL,
  code VARCHAR(20) NOT NULL UNIQUE,
- password VARCHAR(50) NOT NULL,
+ password VARCHAR(100) NOT NULL,
+ authority ENUM('ADMIN', 'USER') NOT NULL,
  PRIMARY KEY(id)
  );
 
@@ -15,7 +16,7 @@ CREATE TABLE groups (
  id INT unsigned AUTO_INCREMENT,
  name VARCHAR(20) NOT NULL,
  code VARCHAR(20) NOT NULL UNIQUE,
- password VARCHAR(30) NOT NULL,
+ password VARCHAR(100) NOT NULL,
  PRIMARY KEY(id)
  );
 
@@ -23,9 +24,10 @@ CREATE TABLE belonging (
  id INT unsigned AUTO_INCREMENT,
  user_id INT unsigned NOT NULL,
  group_id INT unsigned NOT NULL,
- PRIMARY KEY(id),
  FOREIGN KEY(user_id) REFERENCES users(id),
- FOREIGN KEY(group_id) REFERENCES `groups(id)`
+ FOREIGN KEY(group_id) REFERENCES `groups`(id),
+ UNIQUE (user_id, group_id),
+ PRIMARY KEY(id)
  );
 
 CREATE TABLE schedule (
@@ -42,8 +44,10 @@ CREATE TABLE schedule (
  FOREIGN KEY(group_id) REFERENCES groups(id)
  );
 
- INSERT INTO users (id, name, password) VALUES
- (1, "山田", "taro1"), (2, "加藤", "hanako2"), (3, "鈴木", "yusuke3");
+ INSERT INTO users (id, name, password, authority) VALUES
+ (1, "山田", "$2a$10$1kepJd80hfcjEsdcXt1RN.El2m3vB/t4iL7j6AD9t3rjS7WLsQlGu", "ADMIN"),
+ (2, "加藤", "$2a$10$aGTVYEynxpKhc3IY.k.ZduUqxk0oBSA2fmyq5YB/0qfLbgndniscO", "USER"),
+ (3, "鈴木", "$2a$10$RBgDp1I9Aegvi/M8tAlWX.RYmCWhK10XZjTAXsk.VOqIxdOsWb/B.", "USER");
 
  INSERT INTO groups (id, name, password) VALUES
  (1, "A", "groupA"),(2, "B", "groupB");

@@ -1,5 +1,6 @@
 package com.mkdk.schedule.controller;
 
+import com.mkdk.schedule.exception.PasswordException;
 import com.mkdk.schedule.exception.ResourceExistsException;
 import com.mkdk.schedule.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,6 +40,18 @@ public class ScheduleExceptionHandler {
         "message", e.getMessage(),
         "path", request.getRequestURI());
     return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+  }
+
+  @ExceptionHandler(value = PasswordException.class)
+  public ResponseEntity<Map<String, String>> handlePasswordException(
+      PasswordException e, HttpServletRequest request) {
+    Map<String, String> body = Map.of(
+        "timestamp", ZonedDateTime.now().toString(),
+        "status", String.valueOf(HttpStatus.BAD_REQUEST.value()),
+        "error", HttpStatus.BAD_REQUEST.getReasonPhrase(),
+        "message", e.getMessage(),
+        "path", request.getRequestURI());
+    return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

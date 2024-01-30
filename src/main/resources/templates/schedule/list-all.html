@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
+<head>
+    <title>スケジュール一覧 | スケジュール共有アプリ</title>
+</head>
+<body>
+<h1 class="mt-3">スケジュール一覧</h1>
+<a href="../index.html" th:href="@{/}">トップページ</a>
+<a href="../createForm.html" th:href="@{/schedule/createForm}">作成</a>
+
+<div class="my-3">
+    <form th:action="@{/schedule/admin}" th:object="${scheduleList}">
+        <label for="inputGroup">グループ名</label>
+        <select id="inputGroup" class="dropdown form-control" name="groupId">
+            <option value="" selected></option>
+            <option th:each="item : ${groupMap}" th:value="${item.value}" th:text="${item.key}"></option>
+        </select>
+        <div class="mt-3">
+            日付：<input type="date" name="scheduleDate">
+        </div>
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">検索</button>
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ユーザー</th>
+        <th>グループ</th>
+        <th>タイトル</th>
+        <th>日付</th>
+        <th>開始時間</th>
+        <th>終了時間</th>
+        <th>備考</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="schedule : ${scheduleList}">
+        <td th:text="${schedule.userName}">(username)</td>
+        <td th:text="${schedule.groupName}">(groupname)</td>
+        <td th:text="${schedule.title}">(title)</td>
+        <td th:text="${schedule.scheduleDate}">(skdDate)</td>
+        <td th:text="${schedule.startTime}">(startTime)</td>
+        <td th:text="${schedule.endTime}">(endTime)</td>
+        <td th:text="${schedule.comment}">(comment)</td>
+        <td>
+            <form th:action="@{/schedule/{scheduleId}(scheduleId=${schedule.scheduleId})}" method="post">
+                <input type="submit" class="btn btn-outline-danger" name="delete" value="削除">
+                <input type="hidden" name="_method" value="delete">
+                <input type="hidden" name="scheduleId" th:value="${schedule.scheduleId}">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

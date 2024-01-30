@@ -1,6 +1,12 @@
 package com.mkdk.schedule.entity;
 
-public class User {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+
+
+public class User implements UserDetails {
 
   private Integer userId;
 
@@ -10,11 +16,49 @@ public class User {
 
   private String userPassword;
 
-  public User(Integer userId, String userName, String userCode, String userPassword) {
+  private Authority authority;
+
+  public User(Integer userId, String userName, String userCode, String userPassword, Authority authority) {
     this.userId = userId;
     this.userName = userName;
     this.userCode = userCode;
     this.userPassword = userPassword;
+    this.authority = authority;
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return null;
+  }
+
+  @Override
+  public String getPassword() {
+    return null;
+  }
+
+  @Override
+  public String getUsername() {
+    return userCode;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 
   public Integer getUserId() {
@@ -45,7 +89,15 @@ public class User {
     this.userPassword = userPassword;
   }
 
-  public void update(String userName, String userCode, String userPassword) {
+  public Authority getAuthority() {
+    return authority;
+  }
+
+  public void setAuthority(Authority authority) {
+    this.authority = authority;
+  }
+
+  public void update(String userName, String userCode, String userPassword, String authority) {
     if (userName != null) {
       this.setUserName(userName);
     }
@@ -55,6 +107,13 @@ public class User {
     if (userPassword != null) {
       this.setUserPassword(userPassword);
     }
+    if (authority != null) {
+      this.setAuthority(Authority.valueOf(authority));
+    }
+  }
+
+  public enum Authority {
+    ADMIN, USER
   }
 
 }
