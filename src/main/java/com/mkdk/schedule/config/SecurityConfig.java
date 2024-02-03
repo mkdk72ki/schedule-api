@@ -31,6 +31,7 @@ public class SecurityConfig {
         )
         .authorizeHttpRequests(authorizeRequests -> authorizeRequests
             .requestMatchers("/login").permitAll()
+            .requestMatchers("/users/createForm").permitAll()
             .requestMatchers(antMatcher("/users/admin/**")).hasAuthority("ADMIN")
             .requestMatchers(antMatcher("/groups/admin/**")).hasAuthority("ADMIN")
             .requestMatchers(antMatcher("/schedule/admin/**")).hasAuthority("ADMIN")

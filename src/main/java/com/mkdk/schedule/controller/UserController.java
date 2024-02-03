@@ -3,12 +3,16 @@ package com.mkdk.schedule.controller;
 import com.mkdk.schedule.CustomUserDetails;
 import com.mkdk.schedule.controller.form.UserCreateForm;
 import com.mkdk.schedule.controller.form.UserUpdateForm;
+import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.service.UserService;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,7 +81,7 @@ public class UserController {
 
   @DeleteMapping("/users/{userId}")
   public ModelAndView delete(@PathVariable(value = "userId") int userId, ModelAndView modelAndView) {
-    modelAndView.setViewName("redirect:/users/admin");
+    modelAndView.setViewName("redirect:/login");
     userService.deleteUser(userId);
     return modelAndView;
   }
