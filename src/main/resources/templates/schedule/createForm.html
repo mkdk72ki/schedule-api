@@ -10,8 +10,8 @@
 <form action="#" th:action="@{/schedule}" method="post" th:object="${scheduleCreateForm}">
     <div class="mt-3">
         <label class="form-label">グループ名</label>
-        <select id="inputGroup" class="dropdown form-control" name="groupName">
-            <option value="" selected hidden>グループ名</option>
+        <select id="inputGroup" class="dropdown form-control" name="groupName" required>
+            <option value="" hidden>選択してください</option>
             <option th:each="item : ${belongingGroupMap}" th:value="${item.key}" th:text="${item.key}"></option>
         </select>
     </div>
