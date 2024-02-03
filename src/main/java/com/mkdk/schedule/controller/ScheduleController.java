@@ -2,6 +2,7 @@ package com.mkdk.schedule.controller;
 
 import com.mkdk.schedule.CustomUserDetails;
 import com.mkdk.schedule.controller.form.ScheduleCreateForm;
+import com.mkdk.schedule.controller.form.ScheduleUpdateForm;
 import com.mkdk.schedule.service.ScheduleService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -9,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,20 +66,30 @@ public class ScheduleController {
     return modelAndView;
   }
 
+  @GetMapping("/schedule/edit/{scheduleId}")
+  public ModelAndView showUpdateForm(@PathVariable(value = "scheduleId") int scheduleId, @AuthenticationPrincipal CustomUserDetails user, @ModelAttribute ScheduleUpdateForm form, ModelAndView modelAndView) {
+    modelAndView.setViewName("/schedule/updateForm");
+    modelAndView.addObject("scheduleList", scheduleService.checkSchedule(user.getUserId(), null, null));
+    modelAndView.addObject("scheduleInfo", scheduleService.findById(scheduleId));
+    modelAndView.addObject("belongingGroupMap", scheduleService.getGroupMap());
+    modelAndView.addObject("scheduleUpdateForm");
+    return modelAndView;
+  }
+
+  @PatchMapping("/schedule/edit/{scheduleId}")
+  public ModelAndView update(@PathVariable(value = "scheduleId") int scheduleId, @AuthenticationPrincipal CustomUserDetails user, @Validated ScheduleUpdateForm form, BindingResult bindingResult, ModelAndView modelAndView) {
+    if (bindingResult.hasErrors()) {
+      return showUpdateForm(scheduleId, user, form, modelAndView);
+    }
+    modelAndView.setViewName("redirect:/schedule");
+    scheduleService.updateSchedule(scheduleId, form.getTitle(), form.getScheduleDate(), form.getStartTime(), form.getEndTime(), form.getComment());
+    return modelAndView;
+  }
+
   @DeleteMapping("/schedule/{scheduleId}")
   public ModelAndView delete(@PathVariable(value = "scheduleId") int scheduleId, ModelAndView modelAndView) {
     modelAndView.setViewName("redirect:/schedule");
     scheduleService.deleteSchedule(scheduleId);
     return modelAndView;
   }
-
-  /*
-  @PatchMapping("/schedule/{scheduleId}")
-  public ResponseEntity<MessageResponse> updateSchedule(@PathVariable int scheduleId, @RequestBody @Validated ScheduleUpdateForm updateForm) {
-    scheduleService.updateSchedule(scheduleId, updateForm.getTitle(), updateForm.getScheduleDate(), updateForm.getStartTime(), updateForm.getEndTime(), updateForm.getComment());
-    MessageResponse body = new MessageResponse("編集しました");
-    return ResponseEntity.ok().body(body);
-  }
-   */
-
 }
