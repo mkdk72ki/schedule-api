@@ -3,7 +3,6 @@ package com.mkdk.schedule.controller;
 import com.mkdk.schedule.CustomUserDetails;
 import com.mkdk.schedule.controller.form.UserCreateForm;
 import com.mkdk.schedule.controller.form.UserUpdateForm;
-import com.mkdk.schedule.entity.User;
 import com.mkdk.schedule.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -44,13 +43,14 @@ public class UserController {
   @GetMapping("/users/createForm")
   public ModelAndView showCreateForm(@ModelAttribute UserCreateForm form, ModelAndView modelAndView) {
     modelAndView.setViewName("/users/createForm");
-    modelAndView.addObject("createForm");
+    modelAndView.addObject("userCreateForm");
     return modelAndView;
   }
 
-  @GetMapping("/users/updateForm/{userId}")
+  @GetMapping("/users/edit/{userId}")
   public ModelAndView showUpdateForm(@PathVariable(value = "userId") int userId, @ModelAttribute UserUpdateForm form, ModelAndView modelAndView) {
     modelAndView.setViewName("/users/updateForm");
+    modelAndView.addObject("userInfo", userService.findById(userId));
     modelAndView.addObject("updateForm");
     return modelAndView;
   }
@@ -60,18 +60,18 @@ public class UserController {
     if (bindingResult.hasErrors()) {
       return showCreateForm(form, modelAndView);
     }
-    modelAndView.setViewName("redirect:/users/admin");
+    modelAndView.setViewName("redirect:/login");
     modelAndView.addObject("create", userService.createUser(form.getUserName(), form.getUserCode(), form.getUserPassword(), form.getAuthority()));
     return modelAndView;
   }
 
-  @PatchMapping("/users/{userId}")
-  public ModelAndView update(@AuthenticationPrincipal User user, @PathVariable int userId, @Validated UserUpdateForm form, BindingResult bindingResult, ModelAndView modelAndView) {
+  @PatchMapping("/users/edit/{userId}")
+  public ModelAndView update(@PathVariable(value = "userId") int userId, @AuthenticationPrincipal CustomUserDetails user, @Validated UserUpdateForm form, BindingResult bindingResult, ModelAndView modelAndView) {
     if (bindingResult.hasErrors()) {
       return showUpdateForm(userId, form, modelAndView);
     }
-    modelAndView.setViewName("redirect:/users/admin");
-    userService.updateUser(userService.findId(user.getUsername()), form.getUserName(), form.getUserCode(), form.getUserPassword(), form.getAuthority());
+    modelAndView.setViewName("redirect:/users");
+    userService.updateUser(userId, form.getUserName(), form.getUserCode(), form.getUserPassword(), form.getAuthority());
     return modelAndView;
   }
 
@@ -81,23 +81,4 @@ public class UserController {
     userService.deleteUser(userId);
     return modelAndView;
   }
-
-  /*
-  @PatchMapping("/users/edit")
-  public ModelAndView update(@PathVariable int userId, @Validated UserUpdateForm form , BindingResult bindingResult, ModelAndView modelAndView){
-    if (bindingResult.hasErrors()) {
-      return showUpdateForm(form,modelAndView);
-    }    modelAndView.setViewName("redirect:/users");
-    modelAndView.addObject("update",userService.updateUser(userId, form.getUserName(), form.getUserCode(), form.getUserPassword()));
-    return modelAndView;
-  }
-
-  @PatchMapping("/a/users/{userId}")
-  public ResponseEntity<MessageResponse> updateUser(@PathVariable int userId, @RequestBody @Validated UserUpdateForm form) {
-    userService.updateUser(userId, form.getUserName(), form.getUserCode(), form.getUserPassword());
-    MessageResponse body = new MessageResponse("編集しました");
-    return ResponseEntity.ok().body(body);
-  }
-*/
-
 }
