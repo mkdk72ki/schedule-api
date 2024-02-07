@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -49,9 +50,13 @@ public class UserService {
   public void updateUser(int userId, String userName, String userCode, String userPassword, String authority) {
     User user = userMapper.findById(userId)
         .orElseThrow(() -> new ResourceNotFoundException("user not found"));
-    var encodedPassword = passwordEncoder.encode(userPassword);
-    user.update(userName, userCode, encodedPassword, authority);
-    userMapper.update(user);
+    if (!Objects.equals(userCode, userMapper.findCode(userId)) && userMapper.findByCode(user.getUserCode()).isPresent()) {
+      throw new ResourceExistsException("code already exists");
+    } else {
+      var encodedPassword = passwordEncoder.encode(userPassword);
+      user.update(userName, userCode, encodedPassword, authority);
+      userMapper.update(user);
+    }
   }
 
   public void deleteUser(int userId) {

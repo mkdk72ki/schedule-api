@@ -30,7 +30,10 @@ public interface UserMapper {
   @Options(useGeneratedKeys = true, keyProperty = "userId")
   void create(User user);
 
-  @Update("UPDATE users SET name = #{userName}, code = #{userCode}, password = #{userPassword}, authority = #{authority} WHERE id = #{userId}")
+  @Select("SELECT code FROM users WHERE id = #{userId}")
+  String findCode(int userId);
+
+  @Update("UPDATE users SET name = #{userName}, code = #{userCode}, password = #{userPassword} WHERE id = #{userId}")
   void update(User user);
 
   @Delete("DELETE FROM users WHERE id = #{userId}")
