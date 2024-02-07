@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
 <head>
     <title>ユーザー編集 | スケジュール共有アプリケーション</title>
@@ -26,6 +26,25 @@
                th:classappend="${#fields.hasErrors('userPassword')} ? is-invalid">
         <p class="invalid-feedback" th:if="${#fields.hasErrors('userPassword')}" th:errors="*{userPassword}">
             (errors)</p>
+    </div>
+    <div class="mt-3" sec:authorize="hasAuthority('ADMIN')">
+        <label class="form-label" for="authorityRadio">権限</label>
+        <div id="authorityRadio">
+            <div class="form-check" th:classappend="${#fields.hasErrors('authority')} ? is-invalid">
+                <input class="form-check-input" type="radio" id="authorityAdminRadio"
+                       th:field="*{authority}" value="ADMIN"
+                       th:classappend="${#fields.hasErrors('authority')} ? is-invalid">
+                <label class="form-check-label" for="authorityAdminRadio">ADMIN</label>
+            </div>
+            <div class="form-check" th:classappend="${#fields.hasErrors('authority')} ? is-invalid">
+                <input class="form-check-input" type="radio" id="authorityUserRadio"
+                       th:field="*{authority}" value="USER"
+                       th:classappend="${#fields.hasErrors('authority')} ? is-invalid">
+                <label class="form-check-label" for="authorityUserRadio">USER</label>
+            </div>
+            <p class="invalid-feedback" th:if="${#fields.hasErrors('authority')}"
+               th:errors="*{authority}">(errors)</p>
+        </div>
     </div>
     <div class="mt-3">
         <button type="submit" class="btn btn-primary">更新する</button>
