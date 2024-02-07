@@ -21,6 +21,12 @@
                th:href="@{/groups/userList/{groupId}(groupId=${group.groupId})}">(groupname)</a></td>
         <td th:text="${group.groupCode}">(groupcode)</td>
         <td>
+            <form th:action="@{/groups/edit/{groupId}(groupId=${group.groupId})}" method="get">
+                <input type="submit" class="btn btn-outline-primary" name="patch" value="編集">
+                <input type="hidden" name="groupId" th:value="${group.groupId}">
+            </form>
+        </td>
+        <td>
             <form th:action="@{/groups/{groupId}(groupId=${group.groupId})}" method="post">
                 <input type="submit" class="btn btn-outline-danger" name="delete" value="削除">
                 <input type="hidden" name="_method" value="delete">
