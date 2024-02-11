@@ -21,10 +21,13 @@ public class UniqueUserCodeValidator implements ConstraintValidator<UniqueUserCo
   @Override
   public boolean isValid(String value, ConstraintValidatorContext context) {
     Optional<User> user = userMapper.findByCode(value);
-    String userCode = userMapper.findCode(securitySession.getUserId());
-  if (userCode.equals(value)){
-    return true;
-  }
-    return user.isEmpty();
+    Integer userId = securitySession.getUserId();
+    if (userId == null) {
+      return user.isEmpty();
+    } else if (userMapper.findCode(userId).equals(value)) {
+      return true;
+    } else {
+      return user.isEmpty();
+    }
   }
 }
