@@ -26,11 +26,14 @@ public interface UserMapper {
   @Select("SELECT id FROM users WHERE code = #{userCode}")
   Integer findIdByCode(String userCode);
 
-  @Insert("INSERT INTO users (id, name, code, password, authority) VALUES (#{userId}, #{userName}, #{userCode}, #{userPassword}, #{authority})")
+  @Insert("INSERT INTO users (id, name, code, password, authority) VALUES (#{userId}, #{userName}, #{userCode}, #{userPassword}, 'USER')")
   @Options(useGeneratedKeys = true, keyProperty = "userId")
   void create(User user);
 
-  @Update("UPDATE users SET name = #{userName}, code = #{userCode}, password = #{userPassword}, authority = #{authority} WHERE id = #{userId}")
+  @Select("SELECT code FROM users WHERE id = #{userId}")
+  String findCode(int userId);
+
+  @Update("UPDATE users SET name = #{userName}, code = #{userCode}, password = #{userPassword} WHERE id = #{userId}")
   void update(User user);
 
   @Delete("DELETE FROM users WHERE id = #{userId}")

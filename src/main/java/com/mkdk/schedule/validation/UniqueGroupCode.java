@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = UniqueCodeValidator.class)
-public @interface UniqueCode {
-  String message() default "入力されたコードはすでに登録されています。別のコードを入力してください";
+@Constraint(validatedBy = UniqueGroupCodeValidator.class)
+public @interface UniqueGroupCode {
+  String message() default "入力されたIDはすでに登録されています。別のIDを入力してください";
 
   Class<?>[] groups() default {};
 

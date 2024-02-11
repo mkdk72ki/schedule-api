@@ -4,6 +4,7 @@ import com.mkdk.schedule.CustomUserDetails;
 import com.mkdk.schedule.controller.form.BelongingForm;
 import com.mkdk.schedule.controller.form.GroupCreateForm;
 import com.mkdk.schedule.controller.form.GroupUpdateForm;
+import com.mkdk.schedule.controller.form.UserUpdateForm;
 import com.mkdk.schedule.entity.Group;
 import com.mkdk.schedule.service.GroupService;
 import org.springframework.http.ResponseEntity;
@@ -68,17 +69,22 @@ public class GroupController {
     return modelAndView;
   }
 
-  @GetMapping("/groups/{groupId}")
-  public ResponseEntity<Group> findById(@PathVariable int groupId) {
-    Group group = groupService.findById(groupId);
-    return ResponseEntity.ok().body(group);
+  @GetMapping("/groups/edit/{groupId}")
+  public ModelAndView showUpdateForm(@PathVariable(value = "groupId") int groupId, @ModelAttribute GroupUpdateForm form, ModelAndView modelAndView) {
+    modelAndView.setViewName("/groups/updateForm");
+    modelAndView.addObject("groupInfo", groupService.findById(groupId));
+    modelAndView.addObject("groupUpdateForm");
+    return modelAndView;
   }
 
-  @PatchMapping("/groups/{groupId}")
-  public ResponseEntity<MessageResponse> updateGroup(@PathVariable int groupId, @RequestBody @Validated GroupUpdateForm form) {
+  @PatchMapping("/groups/edit/{groupId}")
+  public ModelAndView update(@PathVariable(value = "groupId") int groupId, @Validated GroupUpdateForm form, BindingResult bindingResult, ModelAndView modelAndView) {
+    if (bindingResult.hasErrors()) {
+      return showUpdateForm(groupId, form, modelAndView);
+    }
+    modelAndView.setViewName("redirect:/groups/admin");
     groupService.updateGroup(groupId, form.getGroupName(), form.getGroupCode(), form.getGroupPassword());
-    MessageResponse body = new MessageResponse("編集しました");
-    return ResponseEntity.ok().body(body);
+    return modelAndView;
   }
 
   @DeleteMapping("/groups/{groupId}")

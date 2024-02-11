@@ -2,52 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: layout(~{::title}, ~{::body})}">
 <head>
-    <title>スケジュール作成 | スケジュール共有アプリケーション</title>
+    <title>スケジュール修正 | スケジュール共有アプリケーション</title>
 </head>
 <body>
-<h1 class="mt-3">スケジュール作成</h1>
+<h1 class="mt-3">スケジュール修正</h1>
 <a href="../index.html" th:href="@{/}">トップページ</a>
-<form action="#" th:action="@{/schedule}" method="post" th:object="${scheduleCreateForm}">
-    <div class="mt-3">
-        <label class="form-label">グループ名</label>
-        <select id="inputGroup" class="dropdown form-control" name="groupName" required>
-            <option value="" hidden>選択してください</option>
-            <option th:each="item : ${belongingGroupMap}" th:value="${item.key}" th:text="${item.key}"></option>
-        </select>
-    </div>
+<form th:action="@{/schedule/edit/{scheduleId}(scheduleId=${scheduleInfo.scheduleId})}"
+      th:object="${scheduleUpdateForm}" th:method="patch">
+
     <div class="mt-3">
         <label for="titleInput" class="form-label">タイトル</label>
-        <input type="text" id="titleInput" class="form-control" th:field="*{title}"
+        <input type="text" id="titleInput" name="title" th:value="${scheduleInfo.title}" class="form-control"
                th:classappend="${#fields.hasErrors('title')} ? is-invalid">
         <p class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">(errors)</p>
     </div>
     <div class="mt-3">
         <label for="skdDateInput" class="form-label">日付</label>
-        <input type="date" id="skdDateInput" required class="form-control" th:field="*{scheduleDate}"
+        <input type="date" id="skdDateInput" name="scheduleDate" th:value="${scheduleInfo.scheduleDate}" required
+               class="form-control"
                th:classappend="${#fields.hasErrors('scheduleDate')} ? is-invalid">
         <p class="invalid-feedback" th:if="${#fields.hasErrors('scheduleDate')}" th:errors="*{scheduleDate}">
             (errors)</p>
     </div>
     <div class="mt-3">
         <label for="sTimeInput" class="form-label">開始時間</label>
-        <input type="time" id="sTimeInput" class="form-control" th:field="*{startTime}"
+        <input type="time" id="sTimeInput" name="startTime" th:value="${scheduleInfo.startTime}" class="form-control"
                th:classappend="${#fields.hasErrors('startTime')} ? is-invalid">
         <p class="invalid-feedback" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">(errors)</p>
     </div>
     <div class="mt-3">
         <label for="eTimeInput" class="form-label">終了時間</label>
-        <input type="time" id="eTimeInput" class="form-control" th:field="*{endTime}"
+        <input type="time" id="eTimeInput" name="endTime" th:value="${scheduleInfo.endTime}" class="form-control"
                th:classappend="${#fields.hasErrors('endTime')} ? is-invalid">
         <p class="invalid-feedback" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">(errors)</p>
     </div>
     <div class="mt-3">
         <label for="commentInput" class="form-label">備考</label>
-        <input type="text" id="commentInput" class="form-control" th:field="*{comment}"
+        <input type="text" id="commentInput" name="comment" th:value="${scheduleInfo.comment}" class="form-control"
                th:classappend="${#fields.hasErrors('comment')} ? is-invalid">
         <p class="invalid-feedback" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">(errors)</p>
     </div>
     <div class="mt-3">
-        <button type="submit" class="btn btn-primary">作成</button>
+        <button type="submit" class="btn btn-primary">編集</button>
         <a href="#" onclick="history.back()" class="btn btn-secondary">キャンセル</a>
     </div>
 </form>

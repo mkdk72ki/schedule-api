@@ -25,6 +25,9 @@ public interface GroupMapper {
   @Select("SELECT * FROM `groups` WHERE code = #{groupCode}")
   Optional<Group> findByCode(String groupCode);
 
+  @Select("SELECT code FROM `groups` WHERE id = #{groupId}")
+  String findCode(int groupId);
+
   @Select("SELECT * FROM `groups` WHERE BINARY code = #{groupCode} AND BINARY password = #{groupPassword}")
   Optional<Group> findGroup(String groupCode, String groupPassword);
 

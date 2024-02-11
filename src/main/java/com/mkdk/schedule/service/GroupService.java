@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -19,11 +20,8 @@ public class GroupService {
 
   private final GroupMapper groupMapper;
 
-  private final PasswordEncoder passwordEncoder;
-
-  public GroupService(GroupMapper groupMapper, PasswordEncoder passwordEncoder) {
+  public GroupService(GroupMapper groupMapper) {
     this.groupMapper = groupMapper;
-    this.passwordEncoder = passwordEncoder;
   }
 
   @PreAuthorize("hasAuthority('ADMIN')")
@@ -62,7 +60,10 @@ public class GroupService {
   public void updateGroup(int groupId, String groupName, String groupCode, String groupPassword) {
     Group group = groupMapper.findById(groupId)
         .orElseThrow(() -> new ResourceNotFoundException("group not found"));
-    group.update(groupName, groupCode, groupPassword);
+    if (!Objects.equals(groupCode,groupMapper.findCode(groupId)) && groupMapper.findByCode(groupCode).isPresent()) {
+      throw new ResourceExistsException("code already exists");
+    }
+      group.update(groupName, groupCode, groupPassword);
     groupMapper.update(group);
   }
 

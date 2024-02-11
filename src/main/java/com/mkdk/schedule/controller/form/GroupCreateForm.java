@@ -1,6 +1,7 @@
 package com.mkdk.schedule.controller.form;
 
-import com.mkdk.schedule.validation.UniqueCode;
+import com.mkdk.schedule.validation.UniqueGroupCode;
+import com.mkdk.schedule.validation.UniqueUserCode;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
@@ -13,7 +14,7 @@ public class GroupCreateForm {
 
   @Length(min = 5, max = 20, message = "5文字以上20字以内で入力してください")
   @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "半角英数字のみで入力してください")
-  @UniqueCode
+  @UniqueGroupCode
   private String groupCode;
 
   @Length(min = 5, max = 30, message = "5字以上30字以内で入力してください")

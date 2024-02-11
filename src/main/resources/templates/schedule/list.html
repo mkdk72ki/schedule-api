@@ -46,6 +46,12 @@
         <td th:text="${schedule.endTime}">(endTime)</td>
         <td th:text="${schedule.comment}">(comment)</td>
         <td>
+            <form th:action="@{/schedule/edit/{scheduleId}(scheduleId=${schedule.scheduleId})}" method="get">
+                <input type="submit" class="btn btn-outline-primary" name="patch" value="編集">
+                <input type="hidden" name="scheduleId" th:value="${schedule.scheduleId}">
+            </form>
+        </td>
+        <td>
             <form th:action="@{/schedule/{scheduleId}(scheduleId=${schedule.scheduleId})}" method="post">
                 <input type="submit" class="btn btn-outline-danger" name="delete" value="削除">
                 <input type="hidden" name="_method" value="delete">
