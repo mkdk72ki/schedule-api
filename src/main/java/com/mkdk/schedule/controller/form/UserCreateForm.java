@@ -20,14 +20,10 @@ public class UserCreateForm {
   @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "半角英数字のみで入力してください")
   private String userPassword;
 
-  @NotBlank
-  private String authority;
-
-  public UserCreateForm(String userName, String userCode, String userPassword, String authority) {
+  public UserCreateForm(String userName, String userCode, String userPassword) {
     this.userName = userName;
     this.userCode = userCode;
     this.userPassword = userPassword;
-    this.authority = authority;
   }
 
   public String getUserName() {
@@ -42,7 +38,4 @@ public class UserCreateForm {
     return userPassword;
   }
 
-  public String getAuthority() {
-    return authority;
-  }
 }

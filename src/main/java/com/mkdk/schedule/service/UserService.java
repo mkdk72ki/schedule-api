@@ -36,9 +36,9 @@ public class UserService {
     return userMapper.findIdByCode(userCode);
   }
 
-  public User createUser(String userName, String userCode, String userPassword, String authority) {
+  public User createUser(String userName, String userCode, String userPassword) {
     var encodedPassword = passwordEncoder.encode(userPassword);
-    User user = new User(null, userName, userCode, encodedPassword, User.Authority.valueOf(authority));
+    User user = new User(null, userName, userCode, encodedPassword, null);
     if (userMapper.findByCode(user.getUserCode()).isPresent()) {
       throw new ResourceExistsException("code already exists");
     } else {

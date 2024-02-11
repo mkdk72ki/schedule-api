@@ -7,7 +7,7 @@
 <body>
 <h1 class="mt-3">ユーザー作成</h1>
 <a href="../index.html" th:href="@{/}">トップページ</a>
-<form action="#" th:action="@{/users}" method="post" th:object="${userCreateForm}">
+<form action="#" th:action="@{/users/createForm}" method="post" th:object="${userCreateForm}">
     <div class="mt-3">
         <label for="usernameInput" class="form-label">ユーザー名</label>
         <input type="text" id="usernameInput" class="form-control" th:field="*{userName}"
@@ -25,25 +25,6 @@
         <input type="password" id="passwordInput" class="form-control" th:field="*{userPassword}"
                th:classappend="${#fields.hasErrors('userPassword')} ? is-invalid">
         <p class="invalid-feedback" th:if="${#fields.hasErrors('userPassword')}" th:errors="*{userPassword}">(errors)</p>
-    </div>
-    <div class="mt-3">
-        <label class="form-label" for="authorityRadio">権限</label>
-        <div id="authorityRadio">
-            <div class="form-check" th:classappend="${#fields.hasErrors('authority')} ? is-invalid">
-                <input class="form-check-input" type="radio" id="authorityAdminRadio"
-                       th:field="*{authority}" value="ADMIN"
-                       th:classappend="${#fields.hasErrors('authority')} ? is-invalid">
-                <label class="form-check-label" for="authorityAdminRadio">ADMIN</label>
-            </div>
-            <div class="form-check" th:classappend="${#fields.hasErrors('authority')} ? is-invalid">
-                <input class="form-check-input" type="radio" id="authorityUserRadio"
-                       th:field="*{authority}" value="USER"
-                       th:classappend="${#fields.hasErrors('authority')} ? is-invalid">
-                <label class="form-check-label" for="authorityUserRadio">USER</label>
-            </div>
-            <p class="invalid-feedback" th:if="${#fields.hasErrors('authority')}"
-               th:errors="*{authority}">(errors)</p>
-        </div>
     </div>
     <div class="mt-3">
         <button type="submit" class="btn btn-primary">作成</button>

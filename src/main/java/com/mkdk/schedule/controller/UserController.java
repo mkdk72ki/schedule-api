@@ -59,13 +59,13 @@ public class UserController {
     return modelAndView;
   }
 
-  @PostMapping("/users")
+  @PostMapping("/users/createForm")
   public ModelAndView create(@Validated UserCreateForm form, BindingResult bindingResult, ModelAndView modelAndView) {
     if (bindingResult.hasErrors()) {
       return showCreateForm(form, modelAndView);
     }
+    modelAndView.addObject("create", userService.createUser(form.getUserName(), form.getUserCode(), form.getUserPassword()));
     modelAndView.setViewName("redirect:/login");
-    modelAndView.addObject("create", userService.createUser(form.getUserName(), form.getUserCode(), form.getUserPassword(), form.getAuthority()));
     return modelAndView;
   }
 

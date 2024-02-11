@@ -26,7 +26,7 @@ public interface UserMapper {
   @Select("SELECT id FROM users WHERE code = #{userCode}")
   Integer findIdByCode(String userCode);
 
-  @Insert("INSERT INTO users (id, name, code, password, authority) VALUES (#{userId}, #{userName}, #{userCode}, #{userPassword}, #{authority})")
+  @Insert("INSERT INTO users (id, name, code, password, authority) VALUES (#{userId}, #{userName}, #{userCode}, #{userPassword}, 'USER')")
   @Options(useGeneratedKeys = true, keyProperty = "userId")
   void create(User user);
 
