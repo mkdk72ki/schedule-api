@@ -82,7 +82,7 @@ public class GroupController {
     if (bindingResult.hasErrors()) {
       return showUpdateForm(groupId, form, modelAndView);
     }
-    modelAndView.setViewName("redirect:/groups");
+    modelAndView.setViewName("redirect:/groups/admin");
     groupService.updateGroup(groupId, form.getGroupName(), form.getGroupCode(), form.getGroupPassword());
     return modelAndView;
   }
