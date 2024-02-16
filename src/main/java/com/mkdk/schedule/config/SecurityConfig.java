@@ -27,6 +27,7 @@ public class SecurityConfig {
     http
         .formLogin(formLogin -> formLogin
             .loginPage("/login")
+            .defaultSuccessUrl("/schedule")
             .permitAll()
         )
         .authorizeHttpRequests(authorizeRequests -> authorizeRequests
