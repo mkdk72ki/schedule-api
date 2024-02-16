@@ -2,9 +2,7 @@
 特定のグループ内で気軽に予定を共有できるアプリケーションを作成しました。
 
 # 制作背景
-社会人になると仕事や私生活で忙しく、日程を合わせることに苦労します。
-また、それが分かっているため相手を誘いづらくなってしまいます。
-そこで、「わざわざ企画して誘うほどではないけど、この日これ付き合ってくれる人いたら嬉しいなー」というときにゆるっと予定を書いて共有しておけるアプリを作成しました。
+自分のやりたいことをとりあえず登録しておいて、特定のメンバー間で共有できるというアプリケーションが欲しいと思い、作成しました。
   
 ## ER図
 [![](https://mermaid.ink/img/pako:eNq9Uk1Lw0AU_CuPd1JooHrMrfiBpdRKrZ4WZM2-pgtJNuwHIkn-u5tsEroqHn2HkJ3MzgyZ12CmBGGKpG8lzzUvWcUsQ2dIG4bQtkmya4DhOxWqymWVezBl6J-BmGvl6r-ZgWiyEwlXkEe7XZK0LcwuIwv8_M6bTCa574JNj8D68QBSwNMG5mNv8Oax-80MDVoBC7zX1f7mYbW_uF5egpW2IAhR4LDe3oFJrCxjiAYounu19JczVZZU2ZCvm2JOf3LIyOwcMhzPzSseVGO07wdeQn4_kWPNjflQWkDkOFfyf5bnnf90hXHiRiD-cNbLJG1xgSXpkkvhN7Tp-QztiXxmTP2roCN3he1XovNU7qx6_qwyTK12tEBXC25pXGtMj7wwHiUhrdLbsPXD8ndf95L5GQ?type=png)](https://mermaid.live/edit#pako:eNq9Uk1Lw0AU_CuPd1JooHrMrfiBpdRKrZ4WZM2-pgtJNuwHIkn-u5tsEroqHn2HkJ3MzgyZ12CmBGGKpG8lzzUvWcUsQ2dIG4bQtkmya4DhOxWqymWVezBl6J-BmGvl6r-ZgWiyEwlXkEe7XZK0LcwuIwv8_M6bTCa574JNj8D68QBSwNMG5mNv8Oax-80MDVoBC7zX1f7mYbW_uF5egpW2IAhR4LDe3oFJrCxjiAYounu19JczVZZU2ZCvm2JOf3LIyOwcMhzPzSseVGO07wdeQn4_kWPNjflQWkDkOFfyf5bnnf90hXHiRiD-cNbLJG1xgSXpkkvhN7Tp-QztiXxmTP2roCN3he1XovNU7qx6_qwyTK12tEBXC25pXGtMj7wwHiUhrdLbsPXD8ndf95L5GQ)
@@ -42,35 +40,55 @@
   -  スケジュール削除  
 
 ### 一覧表示
-![admin](https://github.com/mkdk72ki/schedule-api/assets/143886913/88eb0658-493a-4bc8-8aed-0648a2eaccbf)
+![bel](https://github.com/mkdk72ki/schedule-api/assets/143886913/d01d09a9-57d4-47a3-b0ac-a93a49f11468)  
+
 ログインしているユーザーの権限が`ADMIN`の場合、登録されている全てのユーザー、グループ、スケジュールの一覧を見ることができます。
 
 ### ユーザー情報の表示
-![image](https://github.com/mkdk72ki/schedule-api/assets/143886913/6eb5392e-9652-4391-9c84-41b66f03de60)
-自分のユーザー情報の確認と、ユーザーの削除ができます。
+![image](https://github.com/mkdk72ki/schedule-api/assets/143886913/9b41a664-2c3a-4c3f-9617-26556e303397)  
+
+自分のユーザー情報の確認と、ユーザー情報の編集・ユーザーの削除ができます。
 
 ### 流れ
-#### 1.ログインする
-![image](https://github.com/mkdk72ki/schedule-api/assets/143886913/75036530-c281-43a6-9f8f-e3fdab21618a)
+#### 1.ログインする or 新規登録する
+![image](https://github.com/mkdk72ki/schedule-api/assets/143886913/85df92f0-0ad5-40ca-82cc-a3c4aded0e1d)  
+ユーザーID、パスワードを入力して`ログイン`を押します。もしくは、`新規登録`を押してユーザー登録を行います。
+
+![image](https://github.com/mkdk72ki/schedule-api/assets/143886913/3f926021-6242-406a-80c3-cf369abad1c4)
+登録の際は ユーザー名、ユーザーID、パスワードを入力し、`作成`を押します。
 
 #### 2.グループを作成 or グループに加入  
 
 - グループを作成する場合  
-![grsk](https://github.com/mkdk72ki/schedule-api/assets/143886913/03bd3a97-ffe2-4c66-abaa-e0d96e1248d0)
+![grcre](https://github.com/mkdk72ki/schedule-api/assets/143886913/ef535efb-fcf3-496f-abe0-2ec541336cef)
 グループ名、グループID、パスワードを入力して`作成`を押します。
 
 - 既存のグループに加入する場合
-![bel](https://github.com/mkdk72ki/schedule-api/assets/143886913/6a5dc4e7-3aa3-41cb-8e54-a04b79c4b50b)
+![grblo](https://github.com/mkdk72ki/schedule-api/assets/143886913/b5b0cacb-b096-4c4d-bdec-d268d7aeec86)
 入りたいグループのグループID、パスワードを入力して`加入`を押します。
   
-#### 3.スケジュールを投稿する  
-![ｓちぇ](https://github.com/mkdk72ki/schedule-api/assets/143886913/21502675-869d-4b7d-b4d3-f69a72d0b598)
-グループ名(選択式)、タイトル、日付を入力し、`作成`を押します。
+#### 3.スケジュールを登録する  
+![schecre](https://github.com/mkdk72ki/schedule-api/assets/143886913/8a30ecc2-31ed-4758-8821-406a387b8a23)
+グループ名(選択式)、内容、日付を入力し、`作成`を押します。
 また、任意で開始時間、終了時間、詳細を入れることも可能です。
 
 #### 4.スケジュールを確認する
-![bel](https://github.com/mkdk72ki/schedule-api/assets/143886913/fed34884-af1a-49e8-a391-f405062f5d48)
+![sch](https://github.com/mkdk72ki/schedule-api/assets/143886913/602820fd-feb4-4030-94e2-2e0a4fcf31ba)
 自身が加入しているグループに共有されているスケジュールを確認できます。
-また、グループごと・日付ごとにソート表示が可能です。
+また、グループ・日付で絞り込み検索が可能です。
   
 ## 工夫したところ
+- バリデーションの実装
+- グループ・日付での絞り込み検索機能
+- 加入グループのみの一覧表示
+- グループに加入しているユーザーの一覧表示
+
+## 今後の実装したい機能
+- スケジュール一覧をカレンダー表示にする
+- グループパスワードもエンコードして管理する
+- ユーザー情報の編集時にパスワードの再入力を不要にする
+- 終了したスケジュールを削除する
+- いいね機能
+- テストコードの実装
+- CIの実装
+- デプロイ
