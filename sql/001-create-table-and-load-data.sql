@@ -44,13 +44,13 @@ CREATE TABLE schedule (
  FOREIGN KEY(group_id) REFERENCES groups(id)
  );
 
- INSERT INTO users (id, name, password, authority) VALUES
- (1, "山田", "$2a$10$1kepJd80hfcjEsdcXt1RN.El2m3vB/t4iL7j6AD9t3rjS7WLsQlGu", "ADMIN"),
- (2, "加藤", "$2a$10$aGTVYEynxpKhc3IY.k.ZduUqxk0oBSA2fmyq5YB/0qfLbgndniscO", "USER"),
- (3, "鈴木", "$2a$10$RBgDp1I9Aegvi/M8tAlWX.RYmCWhK10XZjTAXsk.VOqIxdOsWb/B.", "USER");
+ INSERT INTO users (id, name, code, password, authority) VALUES
+ (1, "山田", "yamada", "$2a$10$1kepJd80hfcjEsdcXt1RN.El2m3vB/t4iL7j6AD9t3rjS7WLsQlGu", "ADMIN"),
+ (2, "加藤", "katou", "$2a$10$aGTVYEynxpKhc3IY.k.ZduUqxk0oBSA2fmyq5YB/0qfLbgndniscO", "USER"),
+ (3, "鈴木", "suzuki", "$2a$10$RBgDp1I9Aegvi/M8tAlWX.RYmCWhK10XZjTAXsk.VOqIxdOsWb/B.", "USER");
 
- INSERT INTO groups (id, name, password) VALUES
- (1, "A", "groupA"),(2, "B", "groupB");
+ INSERT INTO `groups` (id, name, code, password) VALUES
+ (1, "A", "weAreA", "groupA"),(2, "B", "weAreB", "groupB");
 
  INSERT INTO belonging (id, user_id, group_id) VALUES
  (1, 1, 1), (2, 2, 1), (3, 3, 2), (4, 1, 2);
