@@ -2,7 +2,10 @@
 特定のグループ内で気軽に予定を共有できるアプリケーションを作成しました。
 
 # 制作背景
-自分のやりたいことをとりあえず登録しておいて、特定のメンバー間で共有できるというアプリケーションが欲しいと思い、作成しました。
+友人が皆社会人になってから、なかなか予定が合わず集まることが難しくなってしまい、なんとも寂しく感じていました。
+そこで、もっと気軽に交流できる機会が作れないかと考え、このアプリを開発しようと思い立ちました。
+  
+各々好きな時にやりたいことや空いているということを先に伝えておいて、その時に都合の良い人が参加する、という仕組みにすることで、予定を提示してから日程を調整するより気軽に提案ができるようになり、交流の機会の増加にもつながると考えました。
   
 ## ER図
 [![](https://mermaid.ink/img/pako:eNq9Uk1Lw0AU_CuPd1JooHrMrfiBpdRKrZ4WZM2-pgtJNuwHIkn-u5tsEroqHn2HkJ3MzgyZ12CmBGGKpG8lzzUvWcUsQ2dIG4bQtkmya4DhOxWqymWVezBl6J-BmGvl6r-ZgWiyEwlXkEe7XZK0LcwuIwv8_M6bTCa574JNj8D68QBSwNMG5mNv8Oax-80MDVoBC7zX1f7mYbW_uF5egpW2IAhR4LDe3oFJrCxjiAYounu19JczVZZU2ZCvm2JOf3LIyOwcMhzPzSseVGO07wdeQn4_kWPNjflQWkDkOFfyf5bnnf90hXHiRiD-cNbLJG1xgSXpkkvhN7Tp-QztiXxmTP2roCN3he1XovNU7qx6_qwyTK12tEBXC25pXGtMj7wwHiUhrdLbsPXD8ndf95L5GQ?type=png)](https://mermaid.live/edit#pako:eNq9Uk1Lw0AU_CuPd1JooHrMrfiBpdRKrZ4WZM2-pgtJNuwHIkn-u5tsEroqHn2HkJ3MzgyZ12CmBGGKpG8lzzUvWcUsQ2dIG4bQtkmya4DhOxWqymWVezBl6J-BmGvl6r-ZgWiyEwlXkEe7XZK0LcwuIwv8_M6bTCa574JNj8D68QBSwNMG5mNv8Oax-80MDVoBC7zX1f7mYbW_uF5egpW2IAhR4LDe3oFJrCxjiAYounu19JczVZZU2ZCvm2JOf3LIyOwcMhzPzSseVGO07wdeQn4_kWPNjflQWkDkOFfyf5bnnf90hXHiRiD-cNbLJG1xgSXpkkvhN7Tp-QztiXxmTP2roCN3he1XovNU7qx6_qwyTK12tEBXC25pXGtMj7wwHiUhrdLbsPXD8ndf95L5GQ)
@@ -78,7 +81,7 @@
 また、グループ・日付で絞り込み検索が可能です。
   
 ## 工夫したところ
-- バリデーションの実装
+- Spring Securityによるログイン機能
 - グループ・日付での絞り込み検索機能
 - 加入グループのみの一覧表示
 - グループに加入しているユーザーの一覧表示
@@ -92,3 +95,4 @@
 - テストコードの実装
 - CIの実装
 - デプロイ
+- 他SNSなどとの連携(通知など)
